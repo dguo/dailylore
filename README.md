@@ -1,4 +1,5 @@
 # The Daily Lore
 
-Lightweight news aggregation website, powered by newsapi.org
+Lightweight news aggregation website, powered by
+[News API](https://newsapi.org)
 
