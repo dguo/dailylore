@@ -1,5 +1,11 @@
 import 'whatwg-fetch';
+import debug from 'debug';
 import './styles.scss';
+
+const log = {
+    error: debug('error'),
+    info: debug('info')
+};
 
 const API_KEY = '198d808f4c7f469bafc18a653d8ee81e';
 
@@ -55,7 +61,7 @@ function createCard(source, sourceLogo, sourceUrl, articles) {
 fetch('https://newsapi.org/v1/sources').then((response) => {
     return response.json();
 }).then((json) => {
-    // console.log('response:', JSON.stringify(json, null, 2));
+    log.info('response:', JSON.stringify(json, null, 2));
 
     if (json.status !== 'ok') {
         throw new Error('Failed to get sources: ' + json.status);
@@ -83,7 +89,7 @@ fetch('https://newsapi.org/v1/sources').then((response) => {
     for (let i = 0; i < sourceDetails.length; i++) {
         const sourceDetail = sourceDetails[i];
         if (sourceDetail.status !== 'ok') {
-            console.error(sourceDetail);
+            log.error(sourceDetail);
             continue;
         }
 
@@ -109,7 +115,7 @@ fetch('https://newsapi.org/v1/sources').then((response) => {
         html += '</div>';
     }
 
-    // console.log(html);
+    log.info(html);
     document.getElementById('main').innerHTML = html;
 
     const loadingBar = document.getElementById('loading-bar');
@@ -118,6 +124,6 @@ fetch('https://newsapi.org/v1/sources').then((response) => {
     document.getElementById('footer').className =
         document.getElementById('footer').className.replace('hide', '');
 }).catch((error) => {
-    console.error('Error:', error);
+    log.error(error);
 });
 
