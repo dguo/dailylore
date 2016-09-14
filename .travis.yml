@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-    - "6"
+  - "6"
 script:
-    - "npm run lint:ci"
-    - "./verifyMinification.sh"
+  - "npm run lint:ci"
+  - "./verifyMinification.sh"
 

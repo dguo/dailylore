@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "lint": "eslint .; exit 0",
-    "lint:ci": "eslint .",
+    "lint": "eslint .; sass-lint -v -q; exit 0",
+    "lint:ci": "eslint . && sass-lint -v -q",
     "build": "webpack --progress --colors --watch",
     "build:prod": "webpack --progress --colors --optimize-minimize",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -35,6 +35,7 @@
     "eslint": "3.5.0",
     "materialize-css": "0.97.7",
     "node-sass": "3.9.3",
+    "sass-lint": "1.9.1",
     "sass-loader": "4.0.2",
     "style-loader": "0.13.1",
     "webpack": "1.13.2",
