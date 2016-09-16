@@ -1,6 +1,10 @@
 language: node_js
+
+sudo: false # container-based virtual environment for faster boot time
+
 node_js:
   - "6"
+
 script:
   - "npm run lint:ci"
   - "./verifyMinification.sh"
