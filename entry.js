@@ -13,7 +13,8 @@ const API_KEY = '198d808f4c7f469bafc18a653d8ee81e';
 const BLACKLIST = [
     'espn-cric-info', 'bild', 'wired-de', 'spiegel-online', 'focus',
     'sky-sports-news', 'talksport', 'bbc-sport', 'the-hindu',
-    'the-times-of-india'
+    'the-times-of-india', 'gruenderszene', 'the-sport-bible',
+    't3n', 'football-italia', 'four-four-two'
 ];
 
 let SOURCES;
