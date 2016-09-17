@@ -14,6 +14,12 @@ node_js:
 
 script:
   - "npm run lint:ci"
-  - "shellcheck verifyMinification.sh"
-  - "./verifyMinification.sh"
+  - "shellcheck scripts/*"
+  - "./scripts/verify-minification.sh"
+
+deploy:
+  provider: script
+  script: scripts/purge-cache.sh
+  on:
+    branch: master
 
