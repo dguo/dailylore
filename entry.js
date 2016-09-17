@@ -17,8 +17,6 @@ const BLACKLIST = [
     't3n', 'football-italia', 'four-four-two'
 ];
 
-let SOURCES;
-
 // http://stackoverflow.com/a/6274398
 function shuffle(array) {
     let counter = array.length;
@@ -26,13 +24,13 @@ function shuffle(array) {
     // While there are elements in the array
     while (counter > 0) {
         // Pick a random index
-        let index = Math.floor(Math.random() * counter);
+        const index = Math.floor(Math.random() * counter);
 
         // Decrease counter by 1
         counter--;
 
         // And swap the last element with it
-        let temp = array[counter];
+        const temp = array[counter];
         array[counter] = array[index];
         array[index] = temp;
     }
@@ -40,12 +38,12 @@ function shuffle(array) {
     return array;
 }
 
-function createCard(source, sourceLogo, sourceUrl, articles) {
+function getSourceCard(name, logoUrl, homepageUrl, articles) {
     let card = `<div class="col s12 m4">
                     <div class="card-panel hoverable">
                         <div class="center-align">
-                            <a href="${sourceUrl}">
-                                <img src="${sourceLogo}" alt="${source}">
+                            <a href="${homepageUrl}">
+                                <img src="${logoUrl}" alt="${name}">
                             </a>
                         </div>`;
 
@@ -60,71 +58,80 @@ function createCard(source, sourceLogo, sourceUrl, articles) {
     return card + '</div></div>';
 }
 
-fetch('https://newsapi.org/v1/sources').then((response) => {
-    return response.json();
-}).then((json) => {
+fetch('https://newsapi.org/v1/sources').then(response =>
+    response.json()
+).then(json => {
     log.info('response:', JSON.stringify(json, null, 2));
 
     if (json.status !== 'ok') {
         throw new Error('Failed to get sources: ' + json.status);
     }
 
-    SOURCES = shuffle(json.sources.filter((source) => {
-        return !BLACKLIST.includes(source.id);
-    }));
+    const sources = shuffle(json.sources.filter(source =>
+        !BLACKLIST.includes(source.id)
+    ));
 
-    const sourceFetches = SOURCES.map((source) => {
-        return fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
-                     `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`);
+    let html = '';
+    let counter = 0;
+
+    sources.forEach(source => {
+        fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
+              `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`)
+        .then(sourceResponse => sourceResponse.json())
+        .then(sourceDetails => {
+            counter++;
+
+            if (sourceDetails.status !== 'ok') {
+                log.error(sourceDetails);
+            }
+            else {
+                if (!html) {
+                    html = '<div class="row">';
+                }
+
+                const sourceMetadata = sources.find(source =>
+                    source.id === sourceDetails.source
+                );
+
+                const card = getSourceCard(sourceMetadata.name,
+                                              sourceMetadata.urlsToLogos.small,
+                                              sourceMetadata.url,
+                                              sourceDetails.articles);
+
+                html += card;
+
+                // Close out the row, and add it to the page
+                if (counter % 3 === 0) {
+                    const div = document.getElementById('main');
+                    div.innerHTML += html + '</div>';
+                    html = '';
+                }
+            }
+
+            // Last source
+            if (counter === sources.length) {
+                // Close out the last row if it has fewer than 3 elements
+                if (counter % 3 !== 0) {
+                    html += '</div>';
+                }
+
+                if (html) {
+                    const div = document.getElementById('main');
+                    div.innerHTML += html;
+                }
+
+                // Remove the loading bar
+                const loadingBar = document.getElementById('loading-bar');
+                loadingBar.parentNode.removeChild(loadingBar);
+
+                // Unhide the footer
+                document.getElementById('footer').className =
+                    document.getElementById('footer').className.replace('hide', '');
+            }
+        }).catch((error) => {
+            log.error(error);
+        });
     });
-
-    return Promise.all(sourceFetches);
-}).then((sourceResponses) => {
-    return Promise.all(sourceResponses.map((sourceResponse) => {
-        return sourceResponse.json();
-    }));
-}).then((sourceDetails) => {
-    const rowOpen = '<div class="row">';
-    let count = 0;
-    let html = rowOpen;
-
-    for (let i = 0; i < sourceDetails.length; i++) {
-        const sourceDetail = sourceDetails[i];
-        if (sourceDetail.status !== 'ok') {
-            log.error(sourceDetail);
-            continue;
-        }
-
-        // Check to start a new row
-        if (count % 3 === 0) {
-            html += rowOpen;
-        }
-
-        count++;
-        const card = createCard(SOURCES[i].name, SOURCES[i].urlsToLogos.small,
-                                SOURCES[i].url, sourceDetail.articles);
-
-        html += card;
-
-        // Close out the row
-        if (count % 3 === 0) {
-            html += '</div>';
-        }
-    }
-
-    // Close out the last row if it has fewer than 3 elements
-    if (count % 3 !== 0) {
-        html += '</div>';
-    }
-
-    log.info(html);
-    document.getElementById('main').innerHTML = html;
-
-    const loadingBar = document.getElementById('loading-bar');
-    loadingBar.parentNode.removeChild(loadingBar);
-
-    document.getElementById('footer').className =
-        document.getElementById('footer').className.replace('hide', '');
 }).catch((error) => {
     log.error(error);
 });
