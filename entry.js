@@ -42,14 +42,16 @@ function getSourceCard(name, logoUrl, homepageUrl, articles) {
     let card = `<div class="col s12 m4">
                     <div class="card-panel hoverable">
                         <div class="center-align">
-                            <a href="${homepageUrl}">
+                            <a href="${homepageUrl}" target="_blank">
                                 <img src="${logoUrl}" alt="${name}">
                             </a>
                         </div>`;
 
     for (let i = 0; i < 3 && i < articles.length; i++) {
         card += `<hr>
-                 <a href="${articles[i].url}">${articles[i].title}</a>
+                 <a href="${articles[i].url}" target="_blank">
+                     ${articles[i].title}
+                 </a>
                  <p>
                      ${articles[i].description ? articles[i].description : ''}
                  </p>`;
