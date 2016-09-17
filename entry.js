@@ -127,13 +127,15 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                     document.getElementById('main').appendChild(lastRow);
                 }
 
-                // Remove the loading bar
-                const loadingBar = document.getElementById('loading-bar');
-                loadingBar.parentNode.removeChild(loadingBar);
+                // Hide the loading bar without causing the rows to move up
+                // slightly
+                document.getElementById('loading-bar').style.visibility =
+                    'hidden';
 
                 // Unhide the footer
                 document.getElementById('footer').className =
-                    document.getElementById('footer').className.replace('hide', '');
+                    document.getElementById('footer').className.replace('hide',
+                                                                        '');
             }
         }).catch((error) => {
             log.error(error);
