@@ -1,0 +1,308 @@
+/* ============================== */
+/* ! Layout for desktop version   */
+/* ============================== */
+
+	body {
+	font-family: Verdana, Arial, sans-serif;
+	}
+        
+        p {
+        padding-left: 5px;
+        display: block;
+        padding-bottom: 3px;
+        }
+        
+        img {
+        margin-top: 4px;
+        }
+        
+        li {
+        width: 85%;
+        margin-left: 25px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        }
+        
+        a:link {text-decoration:none; color: inherit;}    /* unvisited link */
+        a:visited {text-decoration:none; color: inherit;} /* visited link */
+        a:hover {text-decoration:underline; color: inherit;}   /* mouse over link */
+        a:active {text-decoration:underline; color: inherit;}  /* selected link */
+
+        .unit-top {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 5px;
+        }
+        
+        .unit-bottom {
+        width: 100%;
+        overflow: hidden;
+        min-height: 250px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        text-align: left;
+        outline: none;
+        border: 1px solid #999;/* IE */
+        border: rgba(0, 0, 0, .2) 1px solid;/* Saf4+, Chrome, FF3.6 */
+        border-bottom:rgba(0, 0, 0, .4) 1px solid;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        background: -moz-linear-gradient(
+            center top,
+            rgba(255, 255, 255, .1) 0%,
+            rgba(0, 0, 0, .1) 100%
+        ); /* FF3.6 */
+        background: -webkit-gradient(
+            linear,
+            center bottom,
+            center top,
+            from(rgba(0, 0, 0, .1)),
+            to(rgba(255, 255, 255, .1))
+        ); /* Saf4+, Chrome */
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000')"; /* IE8 */
+        color:#fff;
+        text-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+        }
+        
+        .button, .button span {
+	display: inline-block;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+        }
+        
+        .button {
+        width: 175px;
+        white-space: nowrap;
+        line-height:1em;
+        position:relative;
+        outline: none;
+        overflow: visible; /* removes extra side padding in IE */
+        cursor: pointer;
+        border: 1px solid #999;/* IE */
+        border: rgba(0, 0, 0, .2) 1px solid;/* Saf4+, Chrome, FF3.6 */
+        border-bottom:rgba(0, 0, 0, .4) 1px solid;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        background: -moz-linear-gradient(
+                center top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(0, 0, 0, .1) 100%
+        );/* FF3.6 */
+        background: -webkit-gradient(
+                linear,
+                center bottom,
+                center top,
+                from(rgba(0, 0, 0, .1)),
+                to(rgba(255, 255, 255, .1))
+        );/* Saf4+, Chrome */
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000')"; /* IE8 */
+        -moz-user-select: none;
+        -webkit-user-select:none;
+        -khtml-user-select: none;
+        user-select: none;
+        margin-bottom:10px;
+        }
+        
+        .button.full, .button.full span {
+        display: block;
+        }
+        
+        .button:hover, .button.hover {
+        background: -moz-linear-gradient(
+                center top,
+                rgba(255, 255, 255, .2) 0%,
+                rgba(255, 255, 255, .1) 100%
+        );/* FF3.6 */
+        background: -webkit-gradient(
+                linear,
+                center bottom,
+                center top,
+                from(rgba(255, 255, 255, .1)),
+                to(rgba(255, 255, 255, .2))
+        );/* Saf4+, Chrome */
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#33FFFFFF', EndColorStr='#19FFFFFF'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#33FFFFFF', EndColorStr='#19FFFFFF')"; /* IE8 */
+        }
+        .button:active, .button.active {
+                top:1px;
+        }
+        .button span {
+        position: relative;
+        color:#fff;
+        text-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+        border-top: rgba(255, 255, 255, .2) 1px solid;
+        padding:0.6em 1.3em;
+        line-height:1em;
+        text-decoration:none;
+        text-align:center;
+        white-space: nowrap;
+        }
+        
+        .button.small span {
+        font-size:12px;  
+        }
+
+        .button.medium span {
+	font-size:14px;
+        }
+
+        .button.large span {
+	font-size:18px;
+        }
+
+        .button.black {
+        background-color: #333333;
+        }
+        
+        .button.gray {
+        background-color: #666666;
+        }
+        
+        .button.white {
+        background-color: #FFFFFF;
+        }
+        
+        .button.white span{
+        color: #666666;
+        }
+        
+        .button.red {
+        background-color: #e62727;
+        }
+        
+        .button.orange {
+        background-color: #ff5c00;
+        }
+        
+        .button.magenta {
+        background-color: #A9014B;
+        }
+        
+        .button.yellow {
+        background-color: #ffb515;
+        }
+        
+        .button.blue {
+        background-color: #00ADEE;
+        }
+        
+        .button.pink {
+        background-color: #e22092;
+        }
+        
+        .button.green {
+        background-color: #91bd09;
+        }
+        
+        .button.rosy {
+        background-color: #F16C7C;
+        }
+        
+        .button.brown {
+        background-color: #804000;
+        }
+        
+        .button.purple {
+        background-color: #800080;
+        }
+        
+        .button.cyan {
+        background-color: #46C7C7;
+        }
+        
+        .button.gold {
+        background-color: #D4A017;
+        }
+        
+        .unit-bottom.black {
+        background-color: #333333;
+        }
+        
+        .unit-bottom.gray {
+        background-color: #666666;
+        }
+        
+        .unit-bottom.white {
+        background-color: #FFFFFF;
+        color: #666666;
+        }
+        
+        .unit-bottom.red {
+        background-color: #e62727;
+        }
+        
+        .unit-bottom.orange {
+        background-color: #ff5c00;
+        }
+        
+        .unit-bottom.magenta {
+        background-color: #A9014B;
+        }
+        
+        .unit-bottom.yellow {
+        background-color: #ffb515;
+        }
+        
+        .unit-bottom.blue {
+        background-color: #00ADEE;
+        }
+        
+        .unit-bottom.pink {
+        background-color: #e22092;
+        }
+        
+        .unit-bottom.green {
+        background-color: #91bd09;
+        }
+        
+        .unit-bottom.rosy {
+        background-color: #F16C7C;
+        }
+        
+        .unit-bottom.brown {
+        background-color: #804000;
+        }
+        
+        .unit-bottom.purple {
+        background-color: #800080;
+        }
+        
+        .unit-bottom.cyan {
+        background-color: #46C7C7;
+        }
+        
+        .unit-bottom.gold {
+        background-color: #D4A017;
+        }
+        
+/* ============================= */
+/* ! Layout for mobile version   */
+/* ============================= */
+
+@media handheld, only screen and (max-width: 767px) {
+
+	body {
+		
+	}
+
+}
+
+
+/* ========================================== */
+/* ! Provide higher res assets for iPhone 4   */
+/* ========================================== */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) { 
+
+/*	.logo {
+		background: url(logo2x.jpg) no-repeat;
+		background-size: 212px 303px;
+	}*/
+
+}
