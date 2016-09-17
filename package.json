@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "lint": "eslint .; sass-lint -v -q; ./verifyMinification.sh; exit 0",
+    "lint": "eslint .; sass-lint -v -q; ./scripts/verify-minification.sh; exit 0",
     "lint:ci": "eslint . && sass-lint -v -q",
     "build": "webpack --progress --colors --watch",
     "build:prod": "webpack --progress --colors --optimize-minimize",
