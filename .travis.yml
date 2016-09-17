@@ -2,10 +2,18 @@ language: node_js
 
 sudo: false # container-based virtual environment for faster boot time
 
+addons:
+  apt:
+    sources:
+      - debian-sid
+    packages:
+      - shellcheck
+
 node_js:
   - "6"
 
 script:
   - "npm run lint:ci"
+  - "shellcheck verifyMinification.sh"
   - "./verifyMinification.sh"
 
