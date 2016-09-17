@@ -104,8 +104,11 @@ fetch('https://newsapi.org/v1/sources').then(response =>
 
                 // Close out the row, and add it to the page
                 if (counter % 3 === 0) {
-                    const div = document.getElementById('main');
-                    div.innerHTML += html + '</div>';
+                    const row = document.createElement('div');
+                    row.innerHTML = html + '</div>';
+
+                    document.getElementById('main').appendChild(row);
+
                     html = '';
                 }
             }
@@ -118,8 +121,10 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                 }
 
                 if (html) {
-                    const div = document.getElementById('main');
-                    div.innerHTML += html;
+                    const lastRow = document.createElement('div');
+                    lastRow.innerHTML = html;
+
+                    document.getElementById('main').appendChild(lastRow);
                 }
 
                 // Remove the loading bar
