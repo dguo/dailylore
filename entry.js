@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import 'autotrack/lib/plugins/outbound-link-tracker';
 import debug from 'debug';
 import './styles.scss';
 
