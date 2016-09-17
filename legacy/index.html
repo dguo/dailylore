@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
+
+<head>
+    <meta charset="utf-8" />
+    <title>The Daily Lore</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- 1140px Grid styles for IE -->
+    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" /><![endif]-->
+    
+    <!-- The 1140px Grid - http://cssgrid.net/ -->
+    <link rel="stylesheet" href="css/1140.css" type=text/css media="screen" />
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" />
+    
+    <!--css3-mediaqueries.js - http://code.google.com/p/css3-mediaqueries-js/ - Enables media queries in some unsupported browsers-->
+    <script type="text/javascript" src="js/css3-mediaqueries.js"></script>
+    
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon-precomposed" href="images/appletouchicon.png" type="image/png" />
+    
+    <meta name="description" content="A snapshot of news headlines." />
+    
+    <meta name="keywords" content="news, aggregator, headlines, daily, lore, news aggregator" />
+    
+    <script language="Javascript" src="generate_units.js"></script>
+    
+    <meta property="og:title" content="The Daily Lore" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:url" content="http://www.dailylore.com" />
+    <meta property="og:image" content="" />
+    <meta property="og:site_name" content="The Daily Lore" />
+    <meta property="fb:app_id" content="3921478152554" />
+    
+    <!-- Google Analytics -->  
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-35015156-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    
+    <!-- implement smooth scroll -->
+    <script type='text/javascript'>
+    jQuery(document).ready(function($) {
+	$(".scroll").click(function(event){		
+		event.preventDefault();
+		$('html,body').animate({scrollTop:$(this.hash).offset().top}, 750);
+	});
+    });
+    </script>
+        
+</head>
+
+<body background="images/texture.jpg" onload="generate_units()">
+    
+<div class="container header">
+    <center><img src="images/Daily_Lore_logo.png" alt="The Daily Lore" style="padding:5px;"/></center>
+</div> <!--/container-->
+
+
+<hr style="margin-bottom: 10px;">
+    
+<div class="container">
+    <div class="row">
+        <div class="threecol">
+            <center>
+                <img src="category_icons/general.png" alt="General"/>
+                <br>
+                <a class="button medium white" href="#a.general" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'General']);"><span>General</span></a>
+            </center>
+        </div>
+        <div class="threecol">
+            <center>
+                <img src="category_icons/business.png" alt="Business"/>
+                <br>
+                <a class="button medium green scroll" href="#business" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Business']);"><span>Business</span></a>
+            </center>
+        </div>
+        <div class="threecol">
+            <center>
+                <img src="category_icons/entertainment.png" alt="Entertainment"/>
+                <br>
+                <a class="button medium purple scroll" href="#entertainment" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Entertainment']);"><span>Entertainment</span></a>
+            </center>
+        </div>
+        <div class="threecol last">
+            <center>
+                <img src="category_icons/politics.png" alt="Politics"/>
+                <br>
+                <a class="button medium brown scroll" href="#politics" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Politics']);"><span>Politics</span></a>
+            </center>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: -20px;">
+    <div class="row">
+        <div class="threecol">
+            <center>
+                <img src="category_icons/random.png" alt="Random"/>
+                <br>
+                <a class="button medium black scroll" href="#random" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Random']);"><span>Random</span></a>
+            </center>
+        </div>
+        <div class="threecol">
+            <center>
+                <img src="category_icons/science_and_health.png" alt="Science and Health"/>
+                <br>
+                <a class="button medium blue scroll" href="#science_and_health" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Science and Health']);"><span>Science and Health</span></a>
+            </center>
+        </div>
+        <div class="threecol">
+            <center>
+                <img src="category_icons/sports.png" alt="Sports"/>
+                <br>
+                <a class="button medium red scroll" href="#sports" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Sports']);"><span>Sports</span></a>
+            </center>
+        </div>
+        <div class="threecol last">
+            <center>
+                <img src="category_icons/technology.png" alt="Technology"/>
+                <br>
+                <a class="button medium orange scroll" href="#technology" onClick="_gaq.push(['_trackEvent', 'Category Buttons', 'Scroll', 'Technology']);"><span>Technology</span></a>
+            </center>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
