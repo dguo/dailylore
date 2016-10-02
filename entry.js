@@ -49,7 +49,7 @@ function getSourceCard(name, logoUrl, homepageUrl, articles) {
 
     for (let i = 0; i < 3 && i < articles.length; i++) {
         card += `<hr>
-                 <a href="${articles[i].url}" target="_blank">
+                 <a class="article" href="${articles[i].url}" target="_blank">
                      ${articles[i].title}
                  </a>
                  <p>

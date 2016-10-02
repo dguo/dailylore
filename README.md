@@ -12,3 +12,14 @@ Lightweight, static news aggregation website
     * [Travis CI](https://travis-ci.org/) clears the CloudFlare cache when the
       master branch is updated
 
+## Development
+* `$ npm install`
+* `$ npm run dev`
+    * This will build the JavaScript bundle, and open the website in your
+      default browser
+    * If you make any changes to the source, the bundle will be rebuilt, and the
+      page should refresh by itself
+      (thanks to [webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html))
+* `$ npm run build`
+    * This will build the production version of the JavaScript bundle
+
