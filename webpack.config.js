@@ -21,6 +21,10 @@ module.exports = {
                 loaders: ["style", "css", "sass"]
             }
         ]
+    },
+    devServer: {
+        inline: true,
+        open: true
     }
 };
 
