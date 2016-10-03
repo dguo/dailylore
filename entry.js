@@ -19,6 +19,14 @@ const BLACKLIST = [
 
 const MAX_DESCRIPTION_LENGTH = 300;
 
+// If a source logo fails to load, just replace it with the source name in text
+window.handleLogoError = function (image) {
+    const sourceName = image.alt;
+    const parent = image.parentNode;
+    parent.removeChild(image);
+    parent.innerHTML = sourceName;
+}
+
 // http://stackoverflow.com/a/6274398
 function shuffle(array) {
     let counter = array.length;
@@ -45,7 +53,8 @@ function getSourceCard(name, logoUrl, homepageUrl, articles) {
                     <div class="card-panel hoverable">
                         <div class="center-align">
                             <a href="${homepageUrl}" target="_blank">
-                                <img src="${logoUrl}" alt="${name}">
+                                <img src="${logoUrl}" alt="${name}"
+                                     onerror="handleLogoError(this)">
                             </a>
                         </div>`;
 
