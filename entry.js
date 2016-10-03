@@ -47,7 +47,15 @@ function getSourceCard(name, logoUrl, homepageUrl, articles) {
                             </a>
                         </div>`;
 
+    const addedTitles = []; // prevent duplicate links
+
     for (let i = 0; i < 3 && i < articles.length; i++) {
+        if (addedTitles.indexOf(articles[i].title) !== -1) {
+            continue;
+        }
+
+        addedTitles.push(articles[i].title);
+
         card += `<hr>
                  <a class="article" href="${articles[i].url}" target="_blank">
                      ${articles[i].title}
