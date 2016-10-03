@@ -17,6 +17,8 @@ const BLACKLIST = [
     't3n', 'football-italia', 'four-four-two'
 ];
 
+const MAX_DESCRIPTION_LENGTH = 300;
+
 // http://stackoverflow.com/a/6274398
 function shuffle(array) {
     let counter = array.length;
@@ -56,12 +58,19 @@ function getSourceCard(name, logoUrl, homepageUrl, articles) {
 
         addedTitles.push(articles[i].title);
 
+        let description = articles[i].description ?
+                          articles[i].description : '';
+        if (description.length > MAX_DESCRIPTION_LENGTH) {
+            description = description.substr(0, MAX_DESCRIPTION_LENGTH).trim() +
+                          '&hellip;';
+        }
+
         card += `<hr>
                  <a class="article" href="${articles[i].url}" target="_blank">
                      ${articles[i].title}
                  </a>
                  <p>
-                     ${articles[i].description ? articles[i].description : ''}
+                     ${description}
                  </p>`;
     }
 
