@@ -1,6 +1,9 @@
-language: node_js
+language: generic
 
-sudo: false # container-based virtual environment for faster boot time
+sudo: required
+
+services:
+  - docker
 
 addons:
   apt:
@@ -9,13 +12,10 @@ addons:
     packages:
       - shellcheck
 
-node_js:
-  - "6"
-
 script:
-  - "npm run lint:ci"
   - "shellcheck scripts/*"
-  - "./scripts/verify-minification.sh"
+  - "./dev prod &"
+  - "./dev ci"
 
 deploy:
   provider: script
