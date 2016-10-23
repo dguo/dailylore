@@ -51,11 +51,13 @@ function shuffle(array) {
 }
 
 function getSourceCard(name, logoUrl, homepageUrl, articles) {
-    let card = `<div class="col s12 m4">
+    let card = `<div class="col s12 m4 l4">
                     <div class="card-panel hoverable">
                         <div class="center-align">
                             <a href="${homepageUrl}" target="_blank">
-                                <img src="${logoUrl}" alt="${name}"
+                                <img class="responsive-img"
+                                     src="${logoUrl}"
+                                     alt="${name}"
                                      onerror="handleLogoError(this)">
                             </a>
                         </div>`;
