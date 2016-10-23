@@ -2,7 +2,7 @@
 
 NUM_LINES=$(wc -l < "bundle.js")
 
-if [ "$NUM_LINES" -gt 10 ]; then
+if [ "$NUM_LINES" -gt 3 ]; then
     echo The JavaScript bundle is not minified.
     exit 1
 fi

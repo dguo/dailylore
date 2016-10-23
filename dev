@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+# ./dev --help
+
+from __future__ import print_function
+
+import argparse
+from subprocess import call
+
+def up(args):
+    call(['docker-compose', 'up', '--build', '--remove-orphans'])
+
+def prod(args):
+    call(['docker-compose', '-f', 'docker-compose.prod.yml', 'up', '--build',
+          '--remove-orphans'])
+
+def down(args):
+    call(['docker-compose', '-f', 'docker-compose.prod.yml', 'down',
+          '--remove-orphans', '--rmi', 'local'])
+
+def ci(args):
+    lint_command = ['docker-compose', '-f', 'docker-compose.prod.yml', 'run',
+                    'web', 'npm', 'run', 'lint:ci']
+    test_command = ['docker-compose', '-f', 'docker-compose.prod.yml', 'run',
+                    'web', 'npm', 'test']
+    if not args.test:
+        return_code = call(lint_command)
+        if return_code != 0:
+            print('Linting failed.')
+            exit(1)
+    if not args.lint:
+        return_code = call(test_command)
+        if return_code != 0:
+            print('Tests failed.')
+            exit(1)
+
+parser = argparse.ArgumentParser(prog='./dev')
+subparsers = parser.add_subparsers(help='Available commands')
+
+parser_up = subparsers.add_parser('up',
+                                  help='Bring up the development enviroment')
+parser_up.set_defaults(func=up)
+
+parser_prod = subparsers.add_parser('prod',
+                                    help='Bring up the production environment')
+parser_prod.set_defaults(func=prod)
+
+parser_down = subparsers.add_parser('down',
+                                    help='Bring down environments and clean up')
+parser_down.set_defaults(func=down)
+
+parser_ci = subparsers.add_parser('ci',
+                                  help='Run linting and/or tests')
+parser_ci_group = parser_ci.add_mutually_exclusive_group()
+parser_ci_group.add_argument('-l', '--lint', action='store_true',
+                             help='Only lint')
+parser_ci_group.add_argument('-t', '--test', action='store_true',
+                             help='Only run the tests')
+parser_ci.set_defaults(func=ci)
+
+args = parser.parse_args()
+args.func(args)
+

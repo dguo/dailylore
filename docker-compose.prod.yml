@@ -1,0 +1,20 @@
+version: '2'
+services:
+  web:
+    extends:
+      file: docker-compose.yml
+      service: web
+    command: npm run prod
+    links:
+      - selenium
+  selenium:
+    image: selenium/standalone-chrome-debug:2.53.0
+    environment:
+      # https://github.com/SeleniumHQ/docker-selenium/issues/227
+      - no_proxy=localhost
+      - HUB_ENV_no_proxy=localhost
+    logging:
+      driver: none
+    ports:
+      - "5900:5900"
+

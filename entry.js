@@ -14,7 +14,9 @@ const BLACKLIST = [
     'espn-cric-info', 'bild', 'wired-de', 'spiegel-online', 'focus',
     'sky-sports-news', 'talksport', 'bbc-sport', 'the-hindu',
     'the-times-of-india', 'gruenderszene', 'the-sport-bible',
-    't3n', 'football-italia', 'four-four-two'
+    't3n', 'football-italia', 'four-four-two', 'abc-news-au', 'the-guardian-au',
+    'daily-mail', 'mtv-news-uk', 'independent', 'mirror', 'business-insider-uk',
+    'the-guardian-uk', 'the-telegraph', 'metro', 'sky-news'
 ];
 
 const MAX_DESCRIPTION_LENGTH = 300;
