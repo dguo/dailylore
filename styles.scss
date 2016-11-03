@@ -18,7 +18,7 @@
 @import '~materialize-css/sass/components/navbar';
 // @import '~materialize-css/sass/components/roboto';
 @import '~materialize-css/sass/components/typography';
-@import '~materialize-css/sass/components/cards';
+// @import '~materialize-css/sass/components/cards';
 // @import '~materialize-css/sass/components/toast';
 // @import '~materialize-css/sass/components/tabs';
 // @import '~materialize-css/sass/components/tooltip';
@@ -39,10 +39,8 @@
 // @import '~materialize-css/sass/components/date_picker/default.date';
 // @import '~materialize-css/sass/components/date_picker/default.time';
 
-$light-grey: #b0bec5;
-
 header {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 footer {
@@ -55,11 +53,19 @@ img {
   max-height: 80px;
 }
 
-hr {
-  border-color: $light-grey;
-}
-
 .progress {
   margin: 0;
+}
+
+.collection {
+  margin-bottom: 0;
+
+  .collection-item {
+    padding-bottom: 5px;
+  }
+}
+
+.row {
+  margin-bottom: 10px;
 }
 

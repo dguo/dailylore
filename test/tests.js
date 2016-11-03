@@ -29,7 +29,7 @@ describe('The Daily Lore', () => {
 
     it('should have several sources', () => {
         browser.waitForVisible('footer');
-        assert.isAbove(browser.elements('.card-panel').value.length, 30);
+        assert.isAbove(browser.elements('.row').value.length, 30);
     });
 
     it('should have an external link', () => {

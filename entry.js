@@ -19,7 +19,7 @@ const BLACKLIST = [
     'the-guardian-uk', 'the-telegraph', 'metro', 'sky-news'
 ];
 
-const MAX_DESCRIPTION_LENGTH = 300;
+const MAX_DESCRIPTION_LENGTH = 400;
 
 // If a source logo fails to load, just replace it with the source name in text
 window.handleLogoError = function (image) {
@@ -51,16 +51,18 @@ function shuffle(array) {
 }
 
 function getSourceCard(name, logoUrl, homepageUrl, articles) {
-    let card = `<div class="col s12 m4 l4">
-                    <div class="card-panel hoverable">
-                        <div class="center-align">
-                            <a href="${homepageUrl}" target="_blank">
-                                <img class="responsive-img"
-                                     src="${logoUrl}"
-                                     alt="${name}"
-                                     onerror="handleLogoError(this)">
-                            </a>
-                        </div>`;
+    let card = `<div class="col s12 offset-m1 m10 offset-l1 l10">
+                    <ul class="collection hoverable">
+                        <li class="collection-item">
+                            <div class="center-align">
+                                <a href="${homepageUrl}" target="_blank">
+                                    <img class="responsive-img"
+                                         src="${logoUrl}"
+                                         alt="${name}"
+                                         onerror="handleLogoError(this)">
+                                </a>
+                            </div>
+                        </li>`;
 
     const addedTitles = []; // prevent duplicate links
 
@@ -78,16 +80,19 @@ function getSourceCard(name, logoUrl, homepageUrl, articles) {
                           '&hellip;';
         }
 
-        card += `<hr>
-                 <a class="article" href="${articles[i].url}" target="_blank">
-                     ${articles[i].title}
-                 </a>
-                 <p>
-                     ${description}
-                 </p>`;
+        card += `<li class="collection-item">
+                     <a class="article"
+                         href="${articles[i].url}"
+                         target="_blank">
+                         ${articles[i].title}
+                     </a>
+                     <p>
+                         ${description}
+                     </p>
+                 </li>`;
     }
 
-    return card + '</div></div>';
+    return `${card}</ul></div>`;
 }
 
 fetch('https://newsapi.org/v1/sources').then(response =>
@@ -103,7 +108,6 @@ fetch('https://newsapi.org/v1/sources').then(response =>
         !BLACKLIST.includes(source.id)
     ));
 
-    let html = '';
     let counter = 0;
 
     sources.forEach(source => {
@@ -117,46 +121,23 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                 log.error(sourceDetails);
             }
             else {
-                if (!html) {
-                    html = '<div class="row">';
-                }
-
                 const sourceMetadata = sources.find(source =>
                     source.id === sourceDetails.source
                 );
 
                 const card = getSourceCard(sourceMetadata.name,
-                                              sourceMetadata.urlsToLogos.small,
-                                              sourceMetadata.url,
-                                              sourceDetails.articles);
+                                           sourceMetadata.urlsToLogos.small,
+                                           sourceMetadata.url,
+                                           sourceDetails.articles);
 
-                html += card;
+                const row = document.createElement('div');
+                row.innerHTML = `<div class="row">${card}</div>`;
 
-                // Close out the row, and add it to the page
-                if (counter % 3 === 0) {
-                    const row = document.createElement('div');
-                    row.innerHTML = html + '</div>';
-
-                    document.getElementById('main').appendChild(row);
-
-                    html = '';
-                }
+                document.getElementById('main').appendChild(row);
             }
 
             // Last source
             if (counter === sources.length) {
-                // Close out the last row if it has fewer than 3 elements
-                if (counter % 3 !== 0) {
-                    html += '</div>';
-                }
-
-                if (html) {
-                    const lastRow = document.createElement('div');
-                    lastRow.innerHTML = html;
-
-                    document.getElementById('main').appendChild(lastRow);
-                }
-
                 // Hide the loading bar without causing the rows to move up
                 // slightly
                 document.getElementById('loading-bar').style.visibility =
