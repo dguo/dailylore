@@ -10,13 +10,16 @@ const log = {
 
 const API_KEY = '198d808f4c7f469bafc18a653d8ee81e';
 
-const BLACKLIST = [
-    'espn-cric-info', 'bild', 'wired-de', 'spiegel-online', 'focus',
-    'sky-sports-news', 'talksport', 'bbc-sport', 'the-hindu',
-    'the-times-of-india', 'gruenderszene', 'the-sport-bible',
-    't3n', 'football-italia', 'four-four-two', 'abc-news-au', 'the-guardian-au',
-    'daily-mail', 'mtv-news-uk', 'independent', 'mirror', 'business-insider-uk',
-    'the-guardian-uk', 'the-telegraph', 'metro', 'sky-news'
+const WHITELIST = [
+    'ars-technica', 'associated-press', 'bbc-news', 'bloomberg',
+    'business-insider', 'buzzfeed', 'cnbc', 'cnn', 'engadget',
+    'entertainment-weekly', 'espn', 'financial-times', 'fortune', 'fox-sports',
+    'google-news', 'ign', 'mashable', 'mtv-news', 'national-geographic',
+    'new-scientist', 'newsweek', 'new-york-magazine', 'nfl-news', 'polygon',
+    'recode', 'reuters', 'techcrunch', 'techradar', 'the-economist',
+    'the-huffington-post', 'the-new-york-times', 'the-next-web',
+    'the-telegraph', 'the-verge', 'the-wall-street-journal',
+    'the-washington-post', 'time', 'usa-today'
 ];
 
 // If a source logo fails to load, just replace it with the source name in text
@@ -93,7 +96,7 @@ fetch('https://newsapi.org/v1/sources').then(response =>
     }
 
     const sources = shuffle(json.sources.filter(source =>
-        !BLACKLIST.includes(source.id)
+        WHITELIST.includes(source.id)
     ));
 
     let counter = 0;

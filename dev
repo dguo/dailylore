@@ -5,13 +5,20 @@ from __future__ import print_function
 
 import argparse
 from subprocess import call
+import sys
 
 def up(args):
-    call(['docker-compose', 'up', '--build', '--remove-orphans'])
+    try:
+        call(['docker-compose', 'up', '--build', '--remove-orphans'])
+    except KeyboardInterrupt:
+        sys.exit()
 
 def prod(args):
-    call(['docker-compose', '-f', 'docker-compose.prod.yml', 'up', '--build',
-          '--remove-orphans'])
+    try:
+        call(['docker-compose', '-f', 'docker-compose.prod.yml', 'up',
+              '--build', '--remove-orphans'])
+    except KeyboardInterrupt:
+        sys.exit()
 
 def down(args):
     call(['docker-compose', '-f', 'docker-compose.prod.yml', 'down',
@@ -26,12 +33,12 @@ def ci(args):
         return_code = call(lint_command)
         if return_code != 0:
             print('Linting failed.')
-            exit(1)
+            sys.exit(1)
     if not args.lint:
         return_code = call(test_command)
         if return_code != 0:
             print('Tests failed.')
-            exit(1)
+            sys.exit(1)
 
 parser = argparse.ArgumentParser(prog='./dev')
 subparsers = parser.add_subparsers(help='Available commands')
