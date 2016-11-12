@@ -19,8 +19,6 @@ const BLACKLIST = [
     'the-guardian-uk', 'the-telegraph', 'metro', 'sky-news'
 ];
 
-const MAX_DESCRIPTION_LENGTH = 400;
-
 // If a source logo fails to load, just replace it with the source name in text
 window.handleLogoError = function (image) {
     const sourceName = image.alt;
@@ -73,22 +71,12 @@ function getSourceCard(name, logoUrl, homepageUrl, articles) {
 
         addedTitles.push(articles[i].title);
 
-        let description = articles[i].description ?
-                          articles[i].description : '';
-        if (description.length > MAX_DESCRIPTION_LENGTH) {
-            description = description.substr(0, MAX_DESCRIPTION_LENGTH).trim() +
-                          '&hellip;';
-        }
-
         card += `<li class="collection-item">
                      <a class="article"
                          href="${articles[i].url}"
                          target="_blank">
                          ${articles[i].title}
                      </a>
-                     <p>
-                         ${description}
-                     </p>
                  </li>`;
     }
 
