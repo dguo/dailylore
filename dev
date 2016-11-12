@@ -4,8 +4,12 @@
 from __future__ import print_function
 
 import argparse
+from httplib import BadStatusLine
+import socket
 from subprocess import call
+from time import sleep
 import sys
+import urllib2
 
 def up(args):
     try:
@@ -24,21 +28,42 @@ def down(args):
     call(['docker-compose', '-f', 'docker-compose.prod.yml', 'down',
           '--remove-orphans', '--rmi', 'local'])
 
+def wait_for_server(url):
+    attempts = 0
+    while attempts < 300:
+        try:
+            if urllib2.urlopen(url).getcode() == 200:
+                print('The server is up.')
+                return
+        except (socket.error, BadStatusLine, urllib2.URLError):
+            pass
+
+        sleep(1)
+        attempts += 1
+
+    print('The server never came up.')
+    sys.exit(1)
+
 def ci(args):
-    lint_command = ['docker-compose', '-f', 'docker-compose.prod.yml', 'run',
-                    'web', 'npm', 'run', 'lint:ci']
-    test_command = ['docker-compose', '-f', 'docker-compose.prod.yml', 'run',
-                    'web', 'npm', 'test']
-    if not args.test:
-        return_code = call(lint_command)
-        if return_code != 0:
-            print('Linting failed.')
-            sys.exit(1)
-    if not args.lint:
-        return_code = call(test_command)
-        if return_code != 0:
-            print('Tests failed.')
-            sys.exit(1)
+    try:
+        wait_for_server('http://localhost:8080')
+
+        lint_command = ['docker-compose', '-f', 'docker-compose.prod.yml',
+                        'run', 'web', 'npm', 'run', 'lint:ci']
+        test_command = ['docker-compose', '-f', 'docker-compose.prod.yml',
+                        'run', 'web', 'npm', 'test']
+        if not args.test:
+            return_code = call(lint_command)
+            if return_code != 0:
+                print('Linting failed.')
+                sys.exit(1)
+        if not args.lint:
+            return_code = call(test_command)
+            if return_code != 0:
+                print('Tests failed.')
+                sys.exit(1)
+    except KeyboardInterrupt:
+        sys.exit()
 
 parser = argparse.ArgumentParser(prog='./dev')
 subparsers = parser.add_subparsers(help='Available commands')

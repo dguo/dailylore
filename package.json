@@ -10,10 +10,8 @@
     "prod": "npm prune && npm install && npm run build && static -a 0.0.0.0",
     "lint": "eslint .; sass-lint -v -q; ./scripts/verify-minification.sh; exit 0",
     "serve": "npm prune && npm install && static -a 0.0.0.0",
-    "wait:web": "while ! curl -m 2 -s -o /dev/null web:8080; do sleep 2; done;",
-    "wait:selenium": "while ! curl -m 2 -s -o /dev/null selenium:4444/wd/hub; do sleep 2; done;",
-    "lint:ci": "npm run wait:web && eslint . && sass-lint -v -q",
-    "test": "npm run wait:web && npm run wait:selenium && wdio ./test/wdio.conf.js"
+    "lint:ci": "eslint . && sass-lint -v -q",
+    "test": "wdio ./test/wdio.conf.js"
   },
   "repository": {
     "type": "git",
