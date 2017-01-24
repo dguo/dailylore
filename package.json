@@ -36,9 +36,9 @@
     "css-loader": "0.25.0",
     "debug": "2.2.0",
     "materialize-css": "0.97.7",
-    "node-sass": "3.9.3",
+    "node-sass": "4.3.0",
     "sass-lint": "1.9.1",
-    "sass-loader": "4.0.2",
+    "sass-loader": "4.1.1",
     "style-loader": "0.13.1",
     "webpack": "1.13.2",
     "whatwg-fetch": "1.0.0"
