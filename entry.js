@@ -52,15 +52,19 @@ function shuffle(array) {
 }
 
 function getSourceCard(name, logoUrl, homepageUrl, articles) {
+    const logo = logoUrl ?
+                 `<img class="responsive-img"
+                     src="${logoUrl}"
+                     alt="${name}"
+                     onerror="handleLogoError(this)">` :
+                 `<h6 class="deep-orange-text darken-2">${name}</h6>`;
+
     let card = `<div class="col s12 offset-m1 m10 offset-l1 l10">
                     <ul class="collection hoverable">
                         <li class="collection-item">
                             <div class="center-align">
                                 <a href="${homepageUrl}" target="_blank">
-                                    <img class="responsive-img"
-                                         src="${logoUrl}"
-                                         alt="${name}"
-                                         onerror="handleLogoError(this)">
+                                   ${logo}
                                 </a>
                             </div>
                         </li>`;
@@ -101,6 +105,8 @@ fetch('https://newsapi.org/v1/sources').then(response =>
 
     let counter = 0;
 
+    const noImages = location.search.indexOf('img=off') > -1;
+
     sources.forEach(source => {
         fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
               `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`)
@@ -116,8 +122,11 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                     source.id === sourceDetails.source
                 );
 
+                const logoUrl = noImages ? null :
+                                sourceMetadata.urlsToLogos.small
+
                 const card = getSourceCard(sourceMetadata.name,
-                                           sourceMetadata.urlsToLogos.small,
+                                           logoUrl,
                                            sourceMetadata.url,
                                            sourceDetails.articles);
 
@@ -146,4 +155,3 @@ fetch('https://newsapi.org/v1/sources').then(response =>
 }).catch((error) => {
     log.error(error);
 });
-

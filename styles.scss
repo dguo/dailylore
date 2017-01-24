@@ -47,6 +47,10 @@ footer {
   &.page-footer {
     padding-top: 0;
   }
+
+  .not-last-link {
+    margin-right: 20px;
+  }
 }
 
 img {
@@ -69,4 +73,3 @@ img {
 .row {
   margin-bottom: 10px;
 }
-

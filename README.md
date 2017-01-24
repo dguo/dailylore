@@ -2,24 +2,27 @@
 
 Lightweight, static news aggregation website
 
-## Infrastructure
+## Tools and Infrastructure
 * [News API](https://newsapi.org) for the headlines
 * [Materialize](http://materializecss.com) for styling
     * [Custom build](https://github.com/dguo/dailylore/blob/master/styles.scss)
       to avoid including unused components
+* [Travis CI](https://travis-ci.org/) for continuous integration
+    * It also clears the CloudFlare cache when the master branch is updated
 * [GitHub Pages](https://pages.github.com) for hosting
 * [CloudFlare](https://www.cloudflare.com) for SSL and caching
-    * [Travis CI](https://travis-ci.org/) clears the CloudFlare cache when the
-      master branch is updated
+* [Google Analytics](https://www.google.com/analytics/) for tracking pageviews
+* [StatusCake](https://www.statuscake.com/) for monitoring
 
 ## Development
-* `$ npm install`
-* `$ npm run dev`
-    * This will build the JavaScript bundle, and open the website in your
-      default browser
-    * If you make any changes to the source, the bundle will be rebuilt, and the
-      page should refresh by itself
-      (thanks to [webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html))
-* `$ npm run build`
-    * This will build the production version of the JavaScript bundle
+If you have [Docker](https://docs.docker.com/) installed, you can develop using
+the `dev` script. Run `$ ./dev -h` to see the options.
 
+If you make any changes to the source, the bundle will be rebuilt, and the page
+should refresh by itself (thanks to
+[webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html)).
+
+`$ ./dev prod` builds a production JavaScript bundle.
+
+## License
+MIT

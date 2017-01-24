@@ -15,16 +15,20 @@ describe('The Daily Lore', () => {
 
     it('should link back to News API', () => {
         browser.waitForVisible('footer');
-        browser.click('#news-api-attribution');
+        browser.click('=Powered by NewsAPI.org');
         assert.equal(browser.getUrl(), 'https://newsapi.org/');
     });
 
-    it('should have a GitHub badge in the footer', () => {
+    it('should have a GitHub link in the footer', () => {
         browser.waitForVisible('footer');
-        browser.frame('ghbtns');
-        browser.click('#gh-btn');
-        browser.switchTab(browser.getTabIds()[1]);
+        browser.click('=GitHub');
         assert.equal(browser.getUrl(), 'https://github.com/dguo/dailylore/');
+    });
+
+    it('should have a link to imageless mode', () => {
+        browser.waitForVisible('footer');
+        browser.click('=Imageless mode');
+        assert.equal(browser.elements('img').value.length, 0);
     });
 
     it('should have several sources', () => {
@@ -39,4 +43,3 @@ describe('The Daily Lore', () => {
         assert.equal(browser.getTabIds().length, numTabs + 1);
     });
 });
-
