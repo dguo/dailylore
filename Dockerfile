@@ -1,4 +1,4 @@
-FROM node:8.2.1
+FROM node:6.11.1
 
 # https://github.com/nodejs/docker-node#dockerfile
 ENV NPM_CONFIG_LOGLEVEL warn
