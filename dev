@@ -12,19 +12,22 @@ import sys
 import urllib2
 
 def up(args):
+    call(['docker-compose', 'up', '--build', '--remove-orphans', '-d'])
     try:
-        call(['docker-compose', 'up', '--build', '--remove-orphans'])
+        call(['docker-compose', 'logs', '-f'])
     except KeyboardInterrupt:
-        sys.exit()
+        pass
+
+def sh(args):
+    call(['docker-compose', 'exec', 'web', 'sh'])
 
 def prod(args):
-    try:
-        call(['docker-compose', '-f', 'docker-compose.prod.yml', 'up',
-              '--build', '--remove-orphans'])
-    except KeyboardInterrupt:
-        sys.exit()
+    call(['docker-compose', '-f', 'docker-compose.prod.yml', 'up',
+          '--build', '--remove-orphans'])
+    call(['docker-compose', '-f', 'logs'])
 
 def down(args):
+    call(['docker-compose', 'down', '--remove-orphans', '--rmi', 'local'])
     call(['docker-compose', '-f', 'docker-compose.prod.yml', 'down',
           '--remove-orphans', '--rmi', 'local'])
 
@@ -72,6 +75,10 @@ parser_up = subparsers.add_parser('up',
                                   help='Bring up the development enviroment')
 parser_up.set_defaults(func=up)
 
+parser_sh = subparsers.add_parser('sh',
+                                  help='Bring up a shell')
+parser_sh.set_defaults(func=sh)
+
 parser_prod = subparsers.add_parser('prod',
                                     help='Bring up the production environment')
 parser_prod.set_defaults(func=prod)
@@ -91,4 +98,3 @@ parser_ci.set_defaults(func=ci)
 
 args = parser.parse_args()
 args.func(args)
-

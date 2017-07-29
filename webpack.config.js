@@ -7,18 +7,26 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel',
-                query: {
-                    presets: ['es2015']
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env']
+                    }
                 }
             },
             {
                 test: /\.scss$/,
-                loaders: ["style", "css", "sass"]
+                use: [{
+                    loader: 'style-loader'
+                }, {
+                    loader: 'css-loader'
+                }, {
+                    loader: 'sass-loader'
+                }]
             }
         ]
     },
@@ -29,6 +37,7 @@ module.exports = {
         open: false,
         stats: {
             chunks: false // limit verbosity
-        }
+        },
+        clientLogLevel: 'warning'
     }
 };

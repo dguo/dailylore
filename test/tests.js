@@ -15,7 +15,7 @@ describe('The Daily Lore', () => {
 
     it('should link back to News API', () => {
         browser.waitForVisible('footer');
-        browser.click('=Powered by NewsAPI.org');
+        browser.click('=News API');
         assert.equal(browser.getUrl(), 'https://newsapi.org/');
     });
 
@@ -23,12 +23,6 @@ describe('The Daily Lore', () => {
         browser.waitForVisible('footer');
         browser.click('=GitHub');
         assert.equal(browser.getUrl(), 'https://github.com/dguo/dailylore/');
-    });
-
-    it('should have a link to imageless mode', () => {
-        browser.waitForVisible('footer');
-        browser.click('=Imageless mode');
-        assert.equal(browser.elements('img').value.length, 0);
     });
 
     it('should have several sources', () => {

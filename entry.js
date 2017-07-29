@@ -22,45 +22,22 @@ const WHITELIST = [
     'the-washington-post', 'time', 'usa-today'
 ];
 
-// If a source logo fails to load, just replace it with the source name in text
-window.handleLogoError = function (image) {
-    const sourceName = image.alt;
-    const parent = image.parentNode;
-    parent.removeChild(image);
-    parent.innerHTML = sourceName;
-}
-
 // http://stackoverflow.com/a/6274398
 function shuffle(array) {
     let counter = array.length;
-
-    // While there are elements in the array
     while (counter > 0) {
-        // Pick a random index
         const index = Math.floor(Math.random() * counter);
-
-        // Decrease counter by 1
         counter--;
-
-        // And swap the last element with it
-        const temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
+        [array[counter], array[index]] = [array[index], array[counter]];
     }
-
     return array;
 }
 
-function getSourceCard(name, logoUrl, homepageUrl, articles) {
-    const logo = logoUrl ?
-                 `<img class="responsive-img"
-                     src="${logoUrl}"
-                     alt="${name}"
-                     onerror="handleLogoError(this)">` :
-                 `<h6 class="deep-orange-text darken-2">${name}</h6>`;
+function getSourceCard(name, homepageUrl, articles) {
+    const logo = `<h6 class="deep-orange-text darken-2">${name}</h6>`;
 
     let card = `<div class="col s12 offset-m1 m10 offset-l1 l10">
-                    <ul class="collection hoverable">
+                    <ul class="collection">
                         <li class="collection-item">
                             <div class="center-align">
                                 <a href="${homepageUrl}" target="_blank">
@@ -105,8 +82,6 @@ fetch('https://newsapi.org/v1/sources').then(response =>
 
     let counter = 0;
 
-    const noImages = location.search.indexOf('img=off') > -1;
-
     sources.forEach(source => {
         fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
               `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`)
@@ -122,11 +97,7 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                     source.id === sourceDetails.source
                 );
 
-                const logoUrl = noImages ? null :
-                                sourceMetadata.urlsToLogos.small
-
                 const card = getSourceCard(sourceMetadata.name,
-                                           logoUrl,
                                            sourceMetadata.url,
                                            sourceDetails.articles);
 

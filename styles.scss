@@ -46,15 +46,12 @@ header {
 footer {
   &.page-footer {
     padding-top: 0;
-  }
 
-  .not-last-link {
-    margin-right: 20px;
+    .footer-copyright {
+      height: 40px;
+      line-height: 40px;
+    }
   }
-}
-
-img {
-  max-height: 80px;
 }
 
 .progress {
