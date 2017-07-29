@@ -24,4 +24,3 @@ deploy:
   script: scripts/purge-cache.sh
   on:
     branch: master
-
