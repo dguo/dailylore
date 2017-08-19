@@ -8,7 +8,7 @@
     "dev": "npm prune && npm install && webpack-dev-server -d",
     "build": "webpack --progress --colors --optimize-minimize",
     "prod": "npm prune && npm install && npm run build && static -a 0.0.0.0",
-    "lint": "eslint .; sass-lint -v -q; ./scripts/verify-minification.sh; exit 0",
+    "lint": "eslint .; sass-lint -v -q; exit 0",
     "serve": "npm prune && npm install && static -a 0.0.0.0",
     "lint:ci": "eslint . && sass-lint -v -q",
     "test": "wdio ./test/wdio.conf.js"
