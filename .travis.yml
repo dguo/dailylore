@@ -16,9 +16,3 @@ script:
   - "shellcheck scripts/*"
   - "./dev prod &"
   - "./dev ci"
-
-deploy:
-  provider: script
-  script: scripts/purge-cache.sh
-  on:
-    branch: master

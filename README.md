@@ -8,9 +8,7 @@ Lightweight, static news aggregation website
     * [Custom build](https://github.com/dguo/dailylore/blob/master/styles.scss)
       to avoid including unused components
 * [Travis CI](https://travis-ci.org/) for continuous integration
-    * It also clears the CloudFlare cache when the master branch is updated
-* [GitHub Pages](https://pages.github.com) for hosting
-* [CloudFlare](https://www.cloudflare.com) for SSL and caching
+* [Netlify](https://www.netlify.com/) for hosting
 * [Google Analytics](https://www.google.com/analytics/) for tracking pageviews
 * [StatusCake](https://www.statuscake.com/) for monitoring
 
@@ -28,4 +26,4 @@ To view [debug](https://github.com/visionmedia/debug#browser-support) output,
 set `localStorage.debug = '*';` in the browser console, and reload the page.
 
 ## License
-MIT
+[MIT](https://github.com/dguo/dailylore/blob/master/LICENSE)
