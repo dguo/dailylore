@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+const webpack = require('webpack');
+
 module.exports = {
     entry: './entry.js',
     output: {
@@ -30,6 +32,9 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.optimize.ModuleConcatenationPlugin()
+    ],
     devServer: {
         inline: true,
         host: '0.0.0.0',
