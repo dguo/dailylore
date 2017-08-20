@@ -33,7 +33,33 @@ function shuffle(array) {
     return array;
 }
 
-function getSourceCard(name, homepageUrl, articles) {
+// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Feature-detecting_localStorage
+function storageAvailable(type) {
+    try {
+        var storage = window[type];
+        const x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something
+            // already stored
+            storage.length !== 0;
+    }
+}
+
+function getSourceCard(name, homepageUrl, articles, viewed) {
     const logo = `<h6 class="deep-orange-text darken-2">${name}</h6>`;
 
     let card = `<div class="col s12 offset-m1 m10 offset-l1 l10">
@@ -49,7 +75,8 @@ function getSourceCard(name, homepageUrl, articles) {
     const addedTitles = []; // prevent duplicate links
 
     for (let i = 0; i < 3 && i < articles.length; i++) {
-        if (addedTitles.indexOf(articles[i].title) !== -1) {
+        if (addedTitles.indexOf(articles[i].title) !== -1 ||
+            viewed.hasOwnProperty(articles[i].url)) {
             continue;
         }
 
@@ -64,7 +91,60 @@ function getSourceCard(name, homepageUrl, articles) {
                  </li>`;
     }
 
-    return `${card}</ul></div>`;
+    return addedTitles.length ? `${card}</ul></div>` : null;
+}
+
+const hideViewed = storageAvailable('localStorage');
+
+if (hideViewed) {
+    let throttle = false;
+    var checkVisibility = function() {
+        if (throttle) {
+            return;
+        }
+
+        const bottom = window.innerHeight || document.documentElement.clientHeight;
+        const articles = document.querySelectorAll('a.article:not(.viewed)');
+
+        if (articles.length === 0) {
+            window.removeEventListener('scroll', checkVisibility);
+        }
+
+        const hrefs = {};
+
+        for (let i = 0; i < articles.length; i++) {
+            const rect = articles[i].getBoundingClientRect();
+            if (rect.top >= 0 && rect.bottom <= bottom) {
+                const href = articles[i].getAttribute('href');
+                hrefs[href] = (new Date()).toISOString();
+
+                // To avoid checking it again
+                articles[i].classList.add('viewed');
+            }
+
+            if (rect.bottom > bottom) {
+                break;
+            }
+        }
+
+        if (hrefs) {
+            let viewed = {};
+            try {
+                viewed = JSON.parse(localStorage.getItem('viewed'));
+            } catch (err) {}
+
+            Object.assign(viewed, hrefs);
+
+            localStorage.setItem('viewed', JSON.stringify(viewed));
+        }
+
+        throttle = true;
+        setTimeout(function() {
+            throttle = false;
+        }, 200);
+    };
+
+    window.addEventListener('scroll', checkVisibility);
 }
 
 fetch('https://newsapi.org/v1/sources').then(response =>
@@ -82,6 +162,13 @@ fetch('https://newsapi.org/v1/sources').then(response =>
 
     let counter = 0;
 
+    let viewed = {};
+    if (hideViewed) {
+        try {
+            viewed = JSON.parse(localStorage.getItem('viewed'));
+        } catch (e) {}
+    }
+
     sources.forEach(source => {
         fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
               `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`)
@@ -97,18 +184,22 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                     source.id === sourceDetails.source
                 );
 
-                const card = getSourceCard(sourceMetadata.name,
-                                           sourceMetadata.url,
-                                           sourceDetails.articles);
+                const card = getSourceCard(
+                    sourceMetadata.name,
+                    sourceMetadata.url,
+                    sourceDetails.articles,
+                    viewed
+                );
 
-                const row = document.createElement('div');
-                row.innerHTML = `<div class="row">${card}</div>`;
-
-                document.getElementById('main').appendChild(row);
+                if (card) {
+                    const row = document.createElement('div');
+                    row.innerHTML = `<div class="row">${card}</div>`;
+                    document.getElementById('main').appendChild(row);
+                }
             }
 
             // Last source
-            if (counter === sources.length) {
+            if (counter >= sources.length) {
                 // Hide the loading bar without causing the rows to move up
                 // slightly
                 document.getElementById('loading-bar').style.visibility =
@@ -118,6 +209,10 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                 document.getElementById('footer').className =
                     document.getElementById('footer').className.replace('hide',
                                                                         '');
+
+                if (hideViewed) {
+                    checkVisibility();
+                }
             }
         }).catch((error) => {
             log.error(error);
