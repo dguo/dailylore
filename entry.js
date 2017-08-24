@@ -127,7 +127,7 @@ if (hideViewed) {
             }
         }
 
-        if (hrefs) {
+        if (Object.keys(hrefs).length) {
             let viewed = {};
             try {
                 viewed = JSON.parse(localStorage.getItem('viewed'));
@@ -165,7 +165,7 @@ fetch('https://newsapi.org/v1/sources').then(response =>
     let viewed = {};
     if (hideViewed) {
         try {
-            viewed = JSON.parse(localStorage.getItem('viewed'));
+            viewed = JSON.parse(localStorage.getItem('viewed')) || viewed;
         } catch (e) {} // eslint-disable-line no-empty
     }
 
