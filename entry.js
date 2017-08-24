@@ -85,9 +85,22 @@ function getSourceCard(name, homepageUrl, articles, viewed) {
     return addedTitles.length ? `${card}</ul></div>` : null;
 }
 
-const hideViewed = storageAvailable('localStorage');
+let hideViewed = true;
+if (storageAvailable('localStorage') &&
+    localStorage.getItem('viewOnce') === 'off') {
+    hideViewed = false;
+} else {
+    location.search.slice(1).split('&').forEach(pair => {
+        const [key, value] = pair.split('=');
+        if (key === 'view-once' && value === 'off') {
+            hideViewed = false;
+        }
+    });
+}
 
-if (hideViewed) {
+if (!hideViewed) {
+     document.getElementById('view-once').checked = false;
+} else {
     let throttle = false;
     var checkVisibility = function() {
         if (throttle) {
@@ -216,5 +229,10 @@ fetch('https://newsapi.org/v1/sources').then(response =>
 });
 
 document.getElementById('view-once').addEventListener('change', function () {
-    console.log(this.checked);
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('viewOnce', this.checked ? 'on' : 'off');
+    } else {
+        const url = location.origin + (this.checked ? '' : '?view-once=off');
+        location.href = url;
+    }
 });
