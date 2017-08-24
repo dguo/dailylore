@@ -1,6 +1,8 @@
 import 'whatwg-fetch';
 import 'autotrack/lib/plugins/outbound-link-tracker';
 import debug from 'debug';
+import shuffle from 'lodash.shuffle';
+
 import './styles.scss';
 
 const log = {
@@ -21,17 +23,6 @@ const WHITELIST = [
     'the-telegraph', 'the-verge', 'the-wall-street-journal',
     'the-washington-post', 'time', 'usa-today'
 ];
-
-// http://stackoverflow.com/a/6274398
-function shuffle(array) {
-    let counter = array.length;
-    while (counter > 0) {
-        const index = Math.floor(Math.random() * counter);
-        counter--;
-        [array[counter], array[index]] = [array[index], array[counter]];
-    }
-    return array;
-}
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Feature-detecting_localStorage
 function storageAvailable(type) {

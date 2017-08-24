@@ -44,15 +44,8 @@ header {
   margin-bottom: 5px;
 }
 
-footer {
-  &.page-footer {
-    padding-top: 0;
-
-    .footer-copyright {
-      height: 40px;
-      line-height: 40px;
-    }
-  }
+#footer {
+  padding-top: 0;
 }
 
 .progress {
