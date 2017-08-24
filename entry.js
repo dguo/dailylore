@@ -131,7 +131,7 @@ if (hideViewed) {
             let viewed = {};
             try {
                 viewed = JSON.parse(localStorage.getItem('viewed'));
-            } catch (err) {}
+            } catch (err) {} // eslint-disable-line no-empty
 
             Object.assign(viewed, hrefs);
 
@@ -166,8 +166,11 @@ fetch('https://newsapi.org/v1/sources').then(response =>
     if (hideViewed) {
         try {
             viewed = JSON.parse(localStorage.getItem('viewed'));
-        } catch (e) {}
+        } catch (e) {} // eslint-disable-line no-empty
     }
+
+    const main = document.getElementById('main');
+    const endMessage = document.getElementById('end-message');
 
     sources.forEach(source => {
         fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
@@ -194,7 +197,7 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                 if (card) {
                     const row = document.createElement('div');
                     row.innerHTML = `<div class="row">${card}</div>`;
-                    document.getElementById('main').appendChild(row);
+                    main.insertBefore(row, endMessage);
                 }
             }
 
@@ -205,10 +208,9 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                 document.getElementById('loading-bar').style.visibility =
                     'hidden';
 
-                // Unhide the footer
-                document.getElementById('footer').className =
-                    document.getElementById('footer').className.replace('hide',
-                                                                        '');
+                // Unhide the end message and footer
+                endMessage.classList.remove('hide');
+                document.getElementById('footer').classList.remove('hide');
 
                 if (hideViewed) {
                     checkVisibility();
@@ -220,4 +222,8 @@ fetch('https://newsapi.org/v1/sources').then(response =>
     });
 }).catch((error) => {
     log.error(error);
+});
+
+document.getElementById('view-once').addEventListener('change', function () {
+    console.log(this.checked);
 });
