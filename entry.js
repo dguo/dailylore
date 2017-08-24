@@ -121,7 +121,7 @@ if (hideViewed) {
         if (Object.keys(hrefs).length) {
             let viewed = {};
             try {
-                viewed = JSON.parse(localStorage.getItem('viewed'));
+                viewed = JSON.parse(localStorage.getItem('viewed')) || viewed;
             } catch (err) {} // eslint-disable-line no-empty
 
             Object.assign(viewed, hrefs);
