@@ -23,7 +23,7 @@ should refresh by itself (thanks to
 `$ ./dev prod` builds a production JavaScript bundle.
 
 To view [debug](https://github.com/visionmedia/debug#browser-support) output,
-set `localStorage.debug = '*';` in the browser console, and reload the page.
+set `localStorage.debug = 'lore';` in the browser console, and reload the page.
 
 ## License
 [MIT](https://github.com/dguo/dailylore/blob/master/LICENSE)

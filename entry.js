@@ -5,10 +5,7 @@ import shuffle from 'lodash.shuffle';
 
 import './styles.scss';
 
-const log = {
-    error: debug('error'),
-    info: debug('info')
-};
+const log = debug('lore');
 
 const API_KEY = '198d808f4c7f469bafc18a653d8ee81e';
 
@@ -50,6 +47,31 @@ function storageAvailable(type) {
     }
 }
 
+// Delete viewed links that are old to avoid hitting the localStorage limit.
+function pruneViewedLinks() {
+    if (storageAvailable('localStorage')) {
+        const now = new Date();
+
+        const viewed = JSON.parse(localStorage.getItem('viewed')) || {};
+        for (const link in viewed) {
+            const viewedTime = new Date(viewed[link]);
+            const daysOld = (now - viewedTime) / 1000 / 60 / 60 / 24;
+
+            if (daysOld > 7) {
+                delete viewed[link];
+            }
+        }
+
+        log('Number of viewed links:', Object.keys(viewed).length);
+
+        try {
+            localStorage.setItem('viewed', JSON.stringify(viewed));
+        } catch (error) {
+            localStorage.removeItem('viewed');
+        }
+    }
+}
+
 function getSourceCard(name, homepageUrl, articles, viewed) {
     const logo = `<h6 class="deep-orange-text darken-2">${name}</h6>`;
 
@@ -65,7 +87,7 @@ function getSourceCard(name, homepageUrl, articles, viewed) {
 
     const addedTitles = []; // prevent duplicate links
 
-    for (let i = 0; i < 3 && i < articles.length; i++) {
+    for (let i = 0; i < 3; i++) {
         if (addedTitles.indexOf(articles[i].title) !== -1 ||
             viewed.hasOwnProperty(articles[i].url)) {
             continue;
@@ -139,7 +161,11 @@ if (!hideViewed) {
 
             Object.assign(viewed, hrefs);
 
-            localStorage.setItem('viewed', JSON.stringify(viewed));
+            try {
+                localStorage.setItem('viewed', JSON.stringify(viewed));
+            } catch (error) {
+                localStorage.removeItem('viewed');
+            }
         }
 
         throttle = true;
@@ -154,8 +180,6 @@ if (!hideViewed) {
 fetch('https://newsapi.org/v1/sources').then(response =>
     response.json()
 ).then(json => {
-    log.info('response:', JSON.stringify(json, null, 2));
-
     if (json.status !== 'ok') {
         throw new Error('Failed to get sources: ' + json.status);
     }
@@ -163,8 +187,6 @@ fetch('https://newsapi.org/v1/sources').then(response =>
     const sources = shuffle(json.sources.filter(source =>
         WHITELIST.includes(source.id)
     ));
-
-    let counter = 0;
 
     let viewed = {};
     if (hideViewed) {
@@ -176,15 +198,13 @@ fetch('https://newsapi.org/v1/sources').then(response =>
     const main = document.getElementById('main');
     const endMessage = document.getElementById('end-message');
 
-    sources.forEach(source => {
+    sources.forEach((source, index) => {
         fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
               `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`)
         .then(sourceResponse => sourceResponse.json())
         .then(sourceDetails => {
-            counter++;
-
             if (sourceDetails.status !== 'ok') {
-                log.error(sourceDetails);
+                log('Bad source response:', sourceDetails);
             }
             else {
                 const sourceMetadata = sources.find(source =>
@@ -206,7 +226,7 @@ fetch('https://newsapi.org/v1/sources').then(response =>
             }
 
             // Last source
-            if (counter >= sources.length) {
+            if (index + 1 >= sources.length) {
                 // Hide the loading bar without causing the rows to move up
                 // slightly
                 document.getElementById('loading-bar').style.visibility =
@@ -219,18 +239,24 @@ fetch('https://newsapi.org/v1/sources').then(response =>
                 if (hideViewed) {
                     checkVisibility();
                 }
+
+                pruneViewedLinks();
             }
         }).catch((error) => {
-            log.error(error);
+            log(error);
         });
     });
 }).catch((error) => {
-    log.error(error);
+    log(error);
 });
 
 document.getElementById('view-once').addEventListener('change', function () {
     if (storageAvailable('localStorage')) {
-        localStorage.setItem('viewOnce', this.checked ? 'on' : 'off');
+        try {
+            localStorage.setItem('viewOnce', this.checked ? 'on' : 'off');
+        } catch (error) {
+            localStorage.removeItem('viewed');
+        }
     } else {
         const url = location.origin + (this.checked ? '' : '?view-once=off');
         location.href = url;
