@@ -68,9 +68,11 @@ header {
 // Make the footer sticky
 body {
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
+  min-height: 100vh;
 }
+
+// Make the footer sticky
 main {
   flex: 1 0 auto;
 }
