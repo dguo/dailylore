@@ -123,7 +123,8 @@ exports.config = {
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
-        ui: 'bdd'
+        ui: 'bdd',
+        timeout: 30000
     },
     //
     // =====
@@ -159,7 +160,7 @@ exports.config = {
     //
     // Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
     beforeTest: function (test) {
-        browser.url('/');
+        browser.url('/?view-once=off');
     },
     //
     // Runs before a WebdriverIO command gets executed.
