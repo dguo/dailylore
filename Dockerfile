@@ -1,7 +1,4 @@
-FROM node:6.11.1
-
-# https://github.com/nodejs/docker-node#dockerfile
-ENV NPM_CONFIG_LOGLEVEL warn
+FROM node:10.7.0
 
 WORKDIR /src
 
