@@ -3,6 +3,7 @@
 Lightweight, static news aggregation website
 
 ## Tools and Infrastructure
+
 * [News API](https://newsapi.org) for the headlines
 * [Materialize](http://materializecss.com) for styling
     * [Custom build](https://github.com/dguo/dailylore/blob/master/styles.scss)
@@ -13,6 +14,7 @@ Lightweight, static news aggregation website
 * [StatusCake](https://www.statuscake.com/) for monitoring
 
 ## Development
+
 If you have [Docker](https://docs.docker.com/) installed, you can develop using
 the `dev` script. Run `$ ./dev -h` to see the options.
 
@@ -24,6 +26,12 @@ should refresh by itself (thanks to
 
 To view [debug](https://github.com/visionmedia/debug#browser-support) output,
 set `localStorage.debug = 'lore';` in the browser console, and reload the page.
+
+## Legacy
+
+This website was one of my earliest projects, and I abandoned it for a few
+years before reviving it. The (terrible) legacy source code is in [this
+repo](https://github.com/dguo/headlines).
 
 ## License
 [MIT](https://github.com/dguo/dailylore/blob/master/LICENSE)
