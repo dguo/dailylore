@@ -26,11 +26,6 @@ def prod(args):
           '--build', '--remove-orphans'])
     call(['docker-compose', '-f', 'logs'])
 
-def down(args):
-    call(['docker-compose', 'down', '--remove-orphans', '--rmi', 'local'])
-    call(['docker-compose', '-f', 'docker-compose.prod.yml', 'down',
-          '--remove-orphans', '--rmi', 'local'])
-
 def wait_for_server(url):
     attempts = 0
     while attempts < 300:
