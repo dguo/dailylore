@@ -5,14 +5,14 @@
     "main": "entry.js",
     "private": true,
     "scripts": {
-        "dev": "yarn install && webpack-dev-server -d",
-        "build": "webpack --progress --colors --optimize-minimize",
+        "build": "webpack --mode=development",
+        "build:min": "webpack --mode=production",
         "format": "prettier --write \"./**/*.{json,js}\"",
         "format:check": "prettier --list-different \"./**/*.{json,js}\"",
-        "prod": "yarn install && yarn run build && static -a 0.0.0.0",
         "lint": "eslint .; sass-lint -v -q; exit 0",
-        "serve": "yarn install && static -a 0.0.0.0",
         "lint:ci": "eslint . && sass-lint -v -q",
+        "prod": "yarn install && yarn run build:min && static -a 0.0.0.0",
+        "start": "yarn install && webpack-dev-server -d",
         "test": "wdio ./test/wdio.conf.js"
     },
     "repository": {
@@ -32,17 +32,17 @@
     "homepage": "https://dailylore.com",
     "dependencies": {
         "autotrack": "1.1.0",
-        "babel-core": "6.26.0",
-        "babel-loader": "7.1.2",
-        "babel-preset-env": "1.6.0",
-        "css-loader": "0.28.11",
+        "babel-core": "6.26.3",
+        "babel-loader": "7.1.5",
+        "babel-preset-env": "1.7.0",
+        "css-loader": "1.0.0",
         "debug": "3.0.0",
         "lodash.shuffle": "4.2.0",
         "materialize-css": "0.100.1",
         "node-sass": "4.9.2",
-        "sass-loader": "7.0.3",
-        "style-loader": "0.21.0",
-        "webpack": "3.5.5",
+        "sass-loader": "7.1.0",
+        "style-loader": "0.22.1",
+        "webpack": "4.16.5",
         "whatwg-fetch": "2.0.3"
     },
     "devDependencies": {
@@ -54,7 +54,8 @@
         "sass-lint": "1.10.2",
         "wdio-mocha-framework": "0.6.2",
         "webdriverio": "4.13.1",
-        "webpack-dev-server": "2.7.1"
+        "webpack-cli": "3.1.0",
+        "webpack-dev-server": "3.1.5"
     },
     "eslintConfig": {
         "extends": [
