@@ -51,5 +51,19 @@
     "wdio-mocha-framework": "0.6.2",
     "webdriverio": "4.13.1",
     "webpack-dev-server": "2.7.1"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "env": {
+        "es6": true,
+        "browser": true
+    },
+    "rules": {
+        "no-unused-vars": ["error", {"args": "none"}]
+    }
   }
 }
