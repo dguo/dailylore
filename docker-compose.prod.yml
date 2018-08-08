@@ -4,7 +4,7 @@ services:
     extends:
       file: docker-compose.yml
       service: web
-    command: npm run prod
+    command: yarn run prod
     links:
       - selenium
   selenium:

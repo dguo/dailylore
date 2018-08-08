@@ -4,4 +4,4 @@ WORKDIR /src
 
 EXPOSE 8080
 
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "run", "dev"]

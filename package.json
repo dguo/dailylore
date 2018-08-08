@@ -5,11 +5,11 @@
   "main": "entry.js",
   "private": true,
   "scripts": {
-    "dev": "npm prune && npm install && webpack-dev-server -d",
+    "dev": "yarn install && webpack-dev-server -d",
     "build": "webpack --progress --colors --optimize-minimize",
-    "prod": "npm prune && npm install && npm rebuild fibers node-sass && npm run build && static -a 0.0.0.0",
+    "prod": "yarn install && yarn run build && static -a 0.0.0.0",
     "lint": "eslint .; sass-lint -v -q; exit 0",
-    "serve": "npm prune && npm install && static -a 0.0.0.0",
+    "serve": "yarn install && static -a 0.0.0.0",
     "lint:ci": "eslint . && sass-lint -v -q",
     "test": "wdio ./test/wdio.conf.js"
   },
@@ -55,15 +55,20 @@
   "eslintConfig": {
     "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
+      "ecmaVersion": 6,
+      "sourceType": "module"
     },
     "env": {
-        "es6": true,
-        "browser": true
+      "es6": true,
+      "browser": true
     },
     "rules": {
-        "no-unused-vars": ["error", {"args": "none"}]
+      "no-unused-vars": [
+        "error",
+        {
+          "args": "none"
+        }
+      ]
     }
   }
 }
