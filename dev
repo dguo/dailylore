@@ -52,9 +52,9 @@ def ci(args):
         wait_for_server('http://localhost:8080')
 
         lint_command = ['docker-compose', '-f', 'docker-compose.prod.yml',
-                        'run', 'web', 'npm', 'run', 'lint:ci']
+                        'run', 'web', 'yarn', 'run', 'lint:ci']
         test_command = ['docker-compose', '-f', 'docker-compose.prod.yml',
-                        'run', 'web', 'npm', 'test']
+                        'run', 'web', 'yarn', 'test']
         if not args.test:
             return_code = call(lint_command)
             if return_code != 0:
