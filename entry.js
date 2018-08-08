@@ -10,15 +10,44 @@ const log = debug('lore');
 const API_KEY = '198d808f4c7f469bafc18a653d8ee81e';
 
 const WHITELIST = [
-    'ars-technica', 'associated-press', 'bbc-news', 'bloomberg',
-    'business-insider', 'buzzfeed', 'cnbc', 'cnn', 'engadget',
-    'entertainment-weekly', 'espn', 'financial-times', 'fortune', 'fox-sports',
-    'google-news', 'ign', 'mashable', 'mtv-news', 'national-geographic',
-    'new-scientist', 'newsweek', 'new-york-magazine', 'nfl-news', 'polygon',
-    'recode', 'reuters', 'techcrunch', 'techradar', 'the-economist',
-    'the-huffington-post', 'the-new-york-times', 'the-next-web',
-    'the-telegraph', 'the-verge', 'the-wall-street-journal',
-    'the-washington-post', 'time', 'usa-today'
+    'ars-technica',
+    'associated-press',
+    'bbc-news',
+    'bloomberg',
+    'business-insider',
+    'buzzfeed',
+    'cnbc',
+    'cnn',
+    'engadget',
+    'entertainment-weekly',
+    'espn',
+    'financial-times',
+    'fortune',
+    'fox-sports',
+    'google-news',
+    'ign',
+    'mashable',
+    'mtv-news',
+    'national-geographic',
+    'new-scientist',
+    'newsweek',
+    'new-york-magazine',
+    'nfl-news',
+    'polygon',
+    'recode',
+    'reuters',
+    'techcrunch',
+    'techradar',
+    'the-economist',
+    'the-huffington-post',
+    'the-new-york-times',
+    'the-next-web',
+    'the-telegraph',
+    'the-verge',
+    'the-wall-street-journal',
+    'the-washington-post',
+    'time',
+    'usa-today'
 ];
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Feature-detecting_localStorage
@@ -29,21 +58,22 @@ function storageAvailable(type) {
         storage.setItem(x, x);
         storage.removeItem(x);
         return true;
-    }
-    catch(e) {
-        return e instanceof DOMException && (
+    } catch (e) {
+        return (
+            e instanceof DOMException &&
             // everything except Firefox
-            e.code === 22 ||
-            // Firefox
-            e.code === 1014 ||
-            // test name field too, because code might not be present
-            // everything except Firefox
-            e.name === 'QuotaExceededError' ||
-            // Firefox
-            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            (e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
             // acknowledge QuotaExceededError only if there's something
             // already stored
-            storage.length !== 0;
+            storage.length !== 0
+        );
     }
 }
 
@@ -88,8 +118,10 @@ function getSourceCard(name, homepageUrl, articles, viewed) {
     const addedTitles = []; // prevent duplicate links
 
     for (let i = 0; i < 3; i++) {
-        if (addedTitles.indexOf(articles[i].title) !== -1 ||
-            viewed.hasOwnProperty(articles[i].url)) {
+        if (
+            addedTitles.indexOf(articles[i].title) !== -1 ||
+            viewed.hasOwnProperty(articles[i].url)
+        ) {
             continue;
         }
 
@@ -108,20 +140,25 @@ function getSourceCard(name, homepageUrl, articles, viewed) {
 }
 
 let hideViewed = true;
-if (storageAvailable('localStorage') &&
-    localStorage.getItem('viewOnce') === 'off') {
+if (
+    storageAvailable('localStorage') &&
+    localStorage.getItem('viewOnce') === 'off'
+) {
     hideViewed = false;
 } else {
-    location.search.slice(1).split('&').forEach(pair => {
-        const [key, value] = pair.split('=');
-        if (key === 'view-once' && value === 'off') {
-            hideViewed = false;
-        }
-    });
+    location.search
+        .slice(1)
+        .split('&')
+        .forEach(pair => {
+            const [key, value] = pair.split('=');
+            if (key === 'view-once' && value === 'off') {
+                hideViewed = false;
+            }
+        });
 }
 
 if (!hideViewed) {
-     document.getElementById('view-once').checked = false;
+    document.getElementById('view-once').checked = false;
 } else {
     let throttle = false;
     var checkVisibility = function() {
@@ -129,7 +166,8 @@ if (!hideViewed) {
             return;
         }
 
-        const bottom = window.innerHeight || document.documentElement.clientHeight;
+        const bottom =
+            window.innerHeight || document.documentElement.clientHeight;
         const articles = document.querySelectorAll('a.article:not(.viewed)');
 
         if (articles.length === 0) {
@@ -142,7 +180,7 @@ if (!hideViewed) {
             const rect = articles[i].getBoundingClientRect();
             if (rect.top >= 0 && rect.bottom <= bottom) {
                 const href = articles[i].getAttribute('href');
-                hrefs[href] = (new Date()).toISOString();
+                hrefs[href] = new Date().toISOString();
 
                 // To avoid checking it again
                 articles[i].classList.add('viewed');
@@ -177,80 +215,86 @@ if (!hideViewed) {
     window.addEventListener('scroll', checkVisibility);
 }
 
-fetch('https://newsapi.org/v1/sources').then(response =>
-    response.json()
-).then(json => {
-    if (json.status !== 'ok') {
-        throw new Error('Failed to get sources: ' + json.status);
-    }
+fetch('https://newsapi.org/v1/sources')
+    .then(response => response.json())
+    .then(json => {
+        if (json.status !== 'ok') {
+            throw new Error('Failed to get sources: ' + json.status);
+        }
 
-    const sources = shuffle(json.sources.filter(source =>
-        WHITELIST.includes(source.id)
-    ));
+        const sources = shuffle(
+            json.sources.filter(source => WHITELIST.includes(source.id))
+        );
 
-    let viewed = {};
-    if (hideViewed) {
-        try {
-            viewed = JSON.parse(localStorage.getItem('viewed')) || viewed;
-        } catch (e) {} // eslint-disable-line no-empty
-    }
+        let viewed = {};
+        if (hideViewed) {
+            try {
+                viewed = JSON.parse(localStorage.getItem('viewed')) || viewed;
+            } catch (e) {} // eslint-disable-line no-empty
+        }
 
-    const main = document.getElementById('main');
-    const endMessage = document.getElementById('end-message');
+        const main = document.getElementById('main');
+        const endMessage = document.getElementById('end-message');
 
-    sources.forEach((source, index) => {
-        fetch(`https://newsapi.org/v1/articles?source=${source.id}` +
-              `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`)
-        .then(sourceResponse => sourceResponse.json())
-        .then(sourceDetails => {
-            if (sourceDetails.status !== 'ok') {
-                log('Bad source response:', sourceDetails);
-            }
-            else {
-                const sourceMetadata = sources.find(source =>
-                    source.id === sourceDetails.source
-                );
+        sources.forEach((source, index) => {
+            fetch(
+                `https://newsapi.org/v1/articles?source=${source.id}` +
+                    `&sortBy=${source.sortBysAvailable[0]}&apiKey=${API_KEY}`
+            )
+                .then(sourceResponse => sourceResponse.json())
+                .then(sourceDetails => {
+                    if (sourceDetails.status !== 'ok') {
+                        log('Bad source response:', sourceDetails);
+                    } else {
+                        const sourceMetadata = sources.find(
+                            source => source.id === sourceDetails.source
+                        );
 
-                const card = getSourceCard(
-                    sourceMetadata.name,
-                    sourceMetadata.url,
-                    sourceDetails.articles,
-                    viewed
-                );
+                        const card = getSourceCard(
+                            sourceMetadata.name,
+                            sourceMetadata.url,
+                            sourceDetails.articles,
+                            viewed
+                        );
 
-                if (card) {
-                    const row = document.createElement('div');
-                    row.innerHTML = `<div class="row">${card}</div>`;
-                    main.insertBefore(row, endMessage);
-                }
-            }
+                        if (card) {
+                            const row = document.createElement('div');
+                            row.innerHTML = `<div class="row">${card}</div>`;
+                            main.insertBefore(row, endMessage);
+                        }
+                    }
 
-            // Last source
-            if (index + 1 >= sources.length) {
-                // Hide the loading bar without causing the rows to move up
-                // slightly
-                document.getElementById('loading-bar').style.visibility =
-                    'hidden';
+                    // Last source
+                    if (index + 1 >= sources.length) {
+                        // Hide the loading bar without causing the rows to move up
+                        // slightly
+                        document.getElementById(
+                            'loading-bar'
+                        ).style.visibility = 'hidden';
 
-                // Unhide the end message and footer
-                endMessage.classList.remove('hide');
-                document.getElementById('footer').classList.remove('hide');
+                        // Unhide the end message and footer
+                        endMessage.classList.remove('hide');
+                        document
+                            .getElementById('footer')
+                            .classList.remove('hide');
 
-                if (hideViewed) {
-                    checkVisibility();
-                }
+                        if (hideViewed) {
+                            checkVisibility();
+                        }
 
-                pruneViewedLinks();
-            }
-        }).catch((error) => {
-            log(error);
+                        pruneViewedLinks();
+                    }
+                })
+                .catch(error => {
+                    log(error);
+                });
         });
+    })
+    .catch(error => {
+        log(error);
     });
-}).catch((error) => {
-    log(error);
-});
 
-document.getElementById('view-once').addEventListener('change', function () {
+document.getElementById('view-once').addEventListener('change', function() {
     if (storageAvailable('localStorage')) {
         try {
             localStorage.setItem('viewOnce', this.checked ? 'on' : 'off');

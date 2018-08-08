@@ -13,9 +13,7 @@ exports.config = {
     // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
-    specs: [
-        './test/tests.js'
-    ],
+    specs: ['./test/tests.js'],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -42,14 +40,16 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
-        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        // grid with only 5 firefox instance available you can make sure that not more than
-        // 5 instance gets started at a time.
-        maxInstances: 5,
-        //
-        browserName: 'chrome'
-    }],
+    capabilities: [
+        {
+            // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+            // grid with only 5 firefox instance available you can make sure that not more than
+            // 5 instance gets started at a time.
+            maxInstances: 5,
+            //
+            browserName: 'chrome'
+        }
+    ],
     //
     // ===================
     // Test Configurations
@@ -159,9 +159,9 @@ exports.config = {
     // },
     //
     // Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
-    beforeTest: function (test) {
+    beforeTest: function(test) {
         browser.url('/?view-once=off');
-    },
+    }
     //
     // Runs before a WebdriverIO command gets executed.
     // beforeCommand: function (commandName, args) {
@@ -173,7 +173,7 @@ exports.config = {
     //
     // Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
     // afterTest: function (test) {
-        // browser.close();
+    // browser.close();
     // },
     //
     // Hook that gets executed after the suite has ended
@@ -189,4 +189,4 @@ exports.config = {
     // possible to defer the end of the process using a promise.
     // onComplete: function(exitCode) {
     // }
-}
+};

@@ -22,19 +22,21 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: [{
-                    loader: 'style-loader'
-                }, {
-                    loader: 'css-loader'
-                }, {
-                    loader: 'sass-loader'
-                }]
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
+                    }
+                ]
             }
         ]
     },
-    plugins: [
-        new webpack.optimize.ModuleConcatenationPlugin()
-    ],
+    plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
     devServer: {
         inline: true,
         host: '0.0.0.0',
