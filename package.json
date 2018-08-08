@@ -1,74 +1,86 @@
 {
-  "name": "dailylore",
-  "version": "0.1.0",
-  "description": "Lightweight news headlines aggregator",
-  "main": "entry.js",
-  "private": true,
-  "scripts": {
-    "dev": "yarn install && webpack-dev-server -d",
-    "build": "webpack --progress --colors --optimize-minimize",
-    "prod": "yarn install && yarn run build && static -a 0.0.0.0",
-    "lint": "eslint .; sass-lint -v -q; exit 0",
-    "serve": "yarn install && static -a 0.0.0.0",
-    "lint:ci": "eslint . && sass-lint -v -q",
-    "test": "wdio ./test/wdio.conf.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dguo/dailylore.git"
-  },
-  "keywords": [
-    "news",
-    "headlines",
-    "aggregator"
-  ],
-  "author": "Danny Guo",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dguo/dailylore/issues"
-  },
-  "homepage": "https://dailylore.com",
-  "dependencies": {
-    "autotrack": "1.1.0",
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
-    "babel-preset-env": "1.6.0",
-    "css-loader": "0.28.11",
-    "debug": "3.0.0",
-    "lodash.shuffle": "4.2.0",
-    "materialize-css": "0.100.1",
-    "node-sass": "4.9.2",
-    "sass-loader": "7.0.3",
-    "style-loader": "0.21.0",
-    "webpack": "3.5.5",
-    "whatwg-fetch": "2.0.3"
-  },
-  "devDependencies": {
-    "chai": "4.1.1",
-    "eslint": "4.5.0",
-    "node-static": "0.7.10",
-    "sass-lint": "1.10.2",
-    "wdio-mocha-framework": "0.6.2",
-    "webdriverio": "4.13.1",
-    "webpack-dev-server": "2.7.1"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module"
+    "name": "dailylore",
+    "version": "0.1.0",
+    "description": "Lightweight news headlines aggregator",
+    "main": "entry.js",
+    "private": true,
+    "scripts": {
+        "dev": "yarn install && webpack-dev-server -d",
+        "build": "webpack --progress --colors --optimize-minimize",
+        "format": "prettier --write \"./**/*.{json,js}\"",
+        "format:check": "prettier --list-different \"./**/*.{json,js}\"",
+        "prod": "yarn install && yarn run build && static -a 0.0.0.0",
+        "lint": "eslint .; sass-lint -v -q; exit 0",
+        "serve": "yarn install && static -a 0.0.0.0",
+        "lint:ci": "eslint . && sass-lint -v -q",
+        "test": "wdio ./test/wdio.conf.js"
     },
-    "env": {
-      "es6": true,
-      "browser": true
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dguo/dailylore.git"
     },
-    "rules": {
-      "no-unused-vars": [
-        "error",
-        {
-          "args": "none"
+    "keywords": [
+        "news",
+        "headlines",
+        "aggregator"
+    ],
+    "author": "Danny Guo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dguo/dailylore/issues"
+    },
+    "homepage": "https://dailylore.com",
+    "dependencies": {
+        "autotrack": "1.1.0",
+        "babel-core": "6.26.0",
+        "babel-loader": "7.1.2",
+        "babel-preset-env": "1.6.0",
+        "css-loader": "0.28.11",
+        "debug": "3.0.0",
+        "lodash.shuffle": "4.2.0",
+        "materialize-css": "0.100.1",
+        "node-sass": "4.9.2",
+        "sass-loader": "7.0.3",
+        "style-loader": "0.21.0",
+        "webpack": "3.5.5",
+        "whatwg-fetch": "2.0.3"
+    },
+    "devDependencies": {
+        "chai": "4.1.1",
+        "eslint": "4.5.0",
+        "eslint-config-prettier": "2.9.0",
+        "node-static": "0.7.10",
+        "prettier": "1.14.1",
+        "sass-lint": "1.10.2",
+        "wdio-mocha-framework": "0.6.2",
+        "webdriverio": "4.13.1",
+        "webpack-dev-server": "2.7.1"
+    },
+    "eslintConfig": {
+        "extends": [
+            "eslint:recommended",
+            "prettier"
+        ],
+        "parserOptions": {
+            "ecmaVersion": 6,
+            "sourceType": "module"
+        },
+        "env": {
+            "es6": true,
+            "browser": true
+        },
+        "rules": {
+            "no-unused-vars": [
+                "error",
+                {
+                    "args": "none"
+                }
+            ]
         }
-      ]
+    },
+    "prettier": {
+        "bracketSpacing": false,
+        "singleQuote": true,
+        "tabWidth": 4
     }
-  }
 }

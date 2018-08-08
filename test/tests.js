@@ -51,7 +51,7 @@ describe('The Daily Lore', () => {
         browser.waitUntil(() => {
             const elements = browser.elements('.viewed').value;
             if (elements.length) {
-                elements.forEach((element) => {
+                elements.forEach(element => {
                     const href = browser.elementIdAttribute(
                         element.ELEMENT,
                         'href'
@@ -68,11 +68,9 @@ describe('The Daily Lore', () => {
         browser.refresh();
         browser.waitForExist('.viewed');
         const elements = browser.elements('.article').value;
-        elements.forEach((element) => {
-            const href = browser.elementIdAttribute(
-                element.ELEMENT,
-                'href'
-            ).value;
+        elements.forEach(element => {
+            const href = browser.elementIdAttribute(element.ELEMENT, 'href')
+                .value;
             assert.notInclude(viewed, href);
         });
     });
