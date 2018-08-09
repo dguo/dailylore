@@ -34,24 +34,36 @@ def command(help):
 parser = argparse.ArgumentParser(prog='./dev')
 subparsers = parser.add_subparsers(metavar='<command>', title='commands')
 
-@command('Format the code')
+def build(args, remaining):
+    prod = ':prod' if args.prod else ''
+    return run(['yarn', 'run', f'build{prod}']).returncode
+parser_build = subparsers.add_parser('build', help='build the JS bundle')
+parser_build.add_argument('-p', '--prod', action='store_true',
+                          help='create a production build')
+parser_build.set_defaults(func=build)
+
+@command('format the code')
 def format(args, remaining):
     return run(['yarn', 'run', 'format']).returncode
 
-@command('Lint the code')
+@command('lint the code')
 def lint(args, remaining):
     return run(['yarn', 'run', 'lint']).returncode
 
-@command('Open the website in your browser')
+@command('open the website in your browser')
 def open(args, remaining):
     webbrowser.open(LOCAL_URL)
 
-@command('Start development')
 def start(args, remaining):
     Thread(target=open_in_browser).start()
-    run(['yarn', 'run', 'start'])
+    prod = ':prod' if args.prod else ''
+    run(['yarn', 'run', f'start{prod}'])
+parser_start = subparsers.add_parser('start', help='start development')
+parser_start.add_argument('-p', '--prod', action='store_true',
+                          help='serve the production build')
+parser_start.set_defaults(func=start)
 
-@command('Run end to end tests')
+@command('run end to end tests')
 def test(args, remaining):
     return run(['yarn', 'run', 'test'] + (remaining or [])).returncode
 

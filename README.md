@@ -16,13 +16,12 @@ Lightweight, static news aggregation website
 ## Development
 
 Check out the scripts in `package.json`. You can also develop using the `dev`
-script. Run `$ ./dev -h` to see the options.
+script. Run `$ ./dev` to see the options. To get started, run `$ yarn start` or
+`$ ./dev start`.
 
 If you make any changes to the source, the bundle will be rebuilt, and the page
 should refresh by itself (thanks to
 [webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html)).
-
-`$ ./dev build -p` builds a production JavaScript bundle.
 
 To view [debug](https://github.com/visionmedia/debug#browser-support) output,
 set `localStorage.debug = 'lore';` in the browser console, and reload the page.
