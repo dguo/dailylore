@@ -7,27 +7,22 @@ import os
 import socket
 from subprocess import run
 import sys
+from threading import Thread
 import time
 from urllib.error import URLError
 from urllib.request import urlopen
 import webbrowser
 
-def open_in_browser(url):
+LOCAL_URL = 'http://localhost:8080'
+
+def open_in_browser():
     while True:
         try:
-            urlopen(url)
-            webbrowser.open(url)
+            urlopen(LOCAL_URL)
+            webbrowser.open(LOCAL_URL)
             return
-        except (ConnectionError, UrlError, HTTPException):
+        except (ConnectionError, URLError, HTTPException):
             time.sleep(1)
-    attempts = 0
-    while attempts < 300:
-        try:
-            if urllib2.urlopen(url).getcode() == 200:
-                print('The server is up.')
-                return
-        except (socket.error, BadStatusLine, urllib2.URLError):
-            pass
 
 def command(help):
     def decorator(func):
@@ -47,10 +42,26 @@ def format(args, remaining):
 def lint(args, remaining):
     return run(['yarn', 'run', 'lint']).returncode
 
+@command('Open the website in your browser')
+def open(args, remaining):
+    webbrowser.open(LOCAL_URL)
+
+@command('Start development')
+def start(args, remaining):
+    Thread(target=open_in_browser).start()
+    run(['yarn', 'run', 'start'])
+
+@command('Run end to end tests')
+def test(args, remaining):
+    return run(['yarn', 'run', 'test'] + (remaining or [])).returncode
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         args, remaining = parser.parse_known_args()
-        returncode = args.func(args, remaining)
-        sys.exit(returncode)
+        try:
+            returncode = args.func(args, remaining)
+            sys.exit(returncode if returncode else 0)
+        except KeyboardInterrupt:
+            pass
     else:
         parser.print_help()

@@ -1,5 +1,5 @@
 [build]
-  command = "yarn run build"
+  command = "yarn run build:prod"
 
 [build.environment]
   YARN_VERSION = "1.9.2"
