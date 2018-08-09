@@ -11,7 +11,8 @@
         "lint": "eslint . && sass-lint -v -q",
         "start": "yarn install && webpack-dev-server -d",
         "start:prod": "yarn install && yarn run build:prod && static -a 0.0.0.0",
-        "test": "jest"
+        "test": "jest",
+        "test:ci": "wait-for-localhost 8080 && yarn run test"
     },
     "repository": {
         "type": "git",
@@ -52,6 +53,7 @@
         "prettier": "1.14.1",
         "puppeteer": "1.6.2",
         "sass-lint": "1.10.2",
+        "wait-for-localhost-cli": "1.0.0",
         "webpack-cli": "3.1.0",
         "webpack-dev-server": "3.1.5"
     },

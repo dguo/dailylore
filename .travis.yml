@@ -4,5 +4,4 @@ script:
   - yarn run format:check
   - yarn run lint
   - yarn run start:prod &
-  - sleep 20
-  - yarn run test
+  - yarn run test:ci
