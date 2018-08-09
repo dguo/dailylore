@@ -2,18 +2,16 @@
     "name": "dailylore",
     "version": "0.1.0",
     "description": "Lightweight news headlines aggregator",
-    "main": "entry.js",
     "private": true,
     "scripts": {
         "build": "webpack --mode=development",
-        "build:min": "webpack --mode=production",
+        "build:prod": "webpack --mode=production",
         "format": "prettier --write \"./**/*.{json,js}\"",
         "format:check": "prettier --list-different \"./**/*.{json,js}\"",
-        "lint": "eslint .; sass-lint -v -q; exit 0",
-        "lint:ci": "eslint . && sass-lint -v -q",
-        "prod": "yarn install && yarn run build:min && static -a 0.0.0.0",
+        "lint": "eslint . && sass-lint -v -q",
         "start": "yarn install && webpack-dev-server -d",
-        "test": "wdio ./test/wdio.conf.js"
+        "start:prod": "yarn install && yarn run build:prod && static -a 0.0.0.0",
+        "test": "jest"
     },
     "repository": {
         "type": "git",
@@ -46,14 +44,14 @@
         "whatwg-fetch": "2.0.3"
     },
     "devDependencies": {
-        "chai": "4.1.1",
         "eslint": "4.5.0",
         "eslint-config-prettier": "2.9.0",
+        "jest": "23.4.2",
+        "jest-puppeteer": "3.2.1",
         "node-static": "0.7.10",
         "prettier": "1.14.1",
+        "puppeteer": "1.6.2",
         "sass-lint": "1.10.2",
-        "wdio-mocha-framework": "0.6.2",
-        "webdriverio": "4.13.1",
         "webpack-cli": "3.1.0",
         "webpack-dev-server": "3.1.5"
     },
@@ -63,7 +61,7 @@
             "prettier"
         ],
         "parserOptions": {
-            "ecmaVersion": 6,
+            "ecmaVersion": 8,
             "sourceType": "module"
         },
         "env": {
@@ -78,6 +76,10 @@
                 }
             ]
         }
+    },
+    "jest": {
+        "preset": "jest-puppeteer",
+        "testRegex": "./test/.*.js$"
     },
     "prettier": {
         "bracketSpacing": false,
