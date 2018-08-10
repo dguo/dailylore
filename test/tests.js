@@ -38,51 +38,47 @@ describe('The Daily Lore', () => {
         expect(link).not.toBeNull();
     });
 
-    // it('should have several sources', async () => {
-    // await page.waitForSelector('#footer', {visible: true});
-    // const articles = await page.$('.article');
-    // expect(articles.length).toBeGreaterThan(30);
-    // });
+    it('should have several sources', async () => {
+        await page.waitForSelector('a.article', {visible: true});
+        const articles = await page.$$('a.article');
+        expect(articles.length).toBeGreaterThan(30);
+    });
 
-    // it('should have an external link', () => {
-    // browser.waitForVisible('footer');
-    // const numTabs = browser.getTabIds().length;
-    // browser.click('.row .article');
-    // assert.equal(browser.getTabIds().length, numTabs + 1);
-    // });
-    // it('should only show links once when view once is turned on', () => {
-    // Make sure the collection of viewed links is cleared
-    // browser.waitForExist('.article');
-    // browser.localStorage('DELETE', 'viewed');
-    // Load the site with view once enabled, and collect the links that
-    // have been marked as viewed
-    // browser.url('/');
-    // browser.waitForVisible('footer');
-    // assert.isAbove(browser.elements('.article').value.length, 30);
-    // const viewed = new Set();
-    // browser.waitUntil(() => {
-    // const elements = browser.elements('.viewed').value;
-    // if (elements.length) {
-    // elements.forEach(element => {
-    // const href = browser.elementIdAttribute(
-    // element.ELEMENT,
-    // 'href'
-    // ).value;
-    // viewed.add(href);
-    // });
-    // return true;
-    // }
-    // return false;
-    // }, 300);
-    // Refresh, and make sure none of the previously viewed links are on the
-    // page
-    // browser.refresh();
-    // browser.waitForExist('.viewed');
-    // const elements = browser.elements('.article').value;
-    // elements.forEach(element => {
-    // const href = browser.elementIdAttribute(element.ELEMENT, 'href')
-    // .value;
-    // assert.notInclude(viewed, href);
-    // });
-    // });
+    it('should only show links once when view once is turned on', async () => {
+        await page.waitForSelector('a.article', {visible: true});
+
+        // Make sure the collection of viewed links is cleared
+
+        await page.evaluate(() => {
+            localStorage.removeItem('viewed');
+        });
+
+        // Load the site with view once enabled, and collect the links that
+        // have been marked as viewed
+
+        await page.goto('http://localhost:8080/');
+
+        await page.waitForSelector('.viewed', {visible: true});
+
+        const viewedLinks = await page.$$eval('.viewed', links => {
+            return links.map(link => link.href);
+        });
+
+        expect(viewedLinks.length).toBeGreaterThan(2);
+
+        // After we reload, none of the previously viewed links should be on the
+        // page
+
+        await page.reload();
+
+        await page.waitForSelector('.viewed', {visible: true});
+
+        const allLinks = await page.$$eval('a.article', links => {
+            return links.map(link => link.href);
+        });
+
+        for (let link of viewedLinks) {
+            expect(allLinks).not.toContain(link);
+        }
+    });
 });
