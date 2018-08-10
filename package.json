@@ -31,6 +31,7 @@
     "homepage": "https://dailylore.com",
     "dependencies": {
         "autotrack": "1.1.0",
+        "axios": "0.18.0",
         "babel-core": "6.26.3",
         "babel-loader": "7.1.5",
         "babel-preset-env": "1.7.0",
@@ -42,8 +43,7 @@
         "sass-loader": "7.1.0",
         "storage-available": "1.1.0",
         "style-loader": "0.22.1",
-        "webpack": "4.16.5",
-        "whatwg-fetch": "2.0.3"
+        "webpack": "4.16.5"
     },
     "devDependencies": {
         "eslint": "4.5.0",
