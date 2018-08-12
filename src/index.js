@@ -147,6 +147,8 @@ if (!hideViewed) {
     window.addEventListener('scroll', checkVisibility);
 }
 
+document.getElementById('loading-bar').style.visibility = 'visible';
+
 getSourcesWithArticles()
     .then(sources => {
         let viewed = {};
