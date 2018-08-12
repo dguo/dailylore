@@ -44,4 +44,4 @@ jspm_packages
 *.swo
 .DS_Store
 
-bundle.js
+site/assets/

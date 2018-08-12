@@ -1,11 +1,13 @@
 /* eslint-env node */
 
+const path = require('path');
+
 const webpack = require('webpack');
 
 module.exports = {
-    entry: './index.js',
+    entry: './src/index.js',
     output: {
-        path: __dirname,
+        path: path.join(__dirname, 'site/assets'),
         filename: 'bundle.js'
     },
     module: {
@@ -38,6 +40,7 @@ module.exports = {
     },
     plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
     devServer: {
+        contentBase: './site',
         inline: true,
         host: '0.0.0.0',
         port: 8080,
