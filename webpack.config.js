@@ -2,13 +2,17 @@
 
 const path = require('path');
 
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
+
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.join(__dirname, 'site/assets'),
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, 'site/assets'),
+        filename: 'index.js'
     },
     module: {
         rules: [
@@ -25,22 +29,23 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-                    },
-                    {
-                        loader: 'sass-loader'
-                    }
+                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
                 ]
             }
         ]
     },
-    plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
+    plugins: [
+        new CleanWebpackPlugin(['site/assets']),
+        new MiniCssExtractPlugin({
+            filename: 'index.css'
+        }),
+        new webpack.optimize.ModuleConcatenationPlugin()
+    ],
     devServer: {
-        contentBase: './site',
+        contentBase: path.resolve(__dirname, 'site'),
+        publicPath: '/assets/',
         inline: true,
         host: '0.0.0.0',
         port: 8080,
@@ -48,6 +53,7 @@ module.exports = {
         stats: {
             chunks: false // limit verbosity
         },
-        clientLogLevel: 'warning'
+        clientLogLevel: 'warning',
+        watchContentBase: true
     }
 };

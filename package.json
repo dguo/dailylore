@@ -5,11 +5,11 @@
     "private": true,
     "scripts": {
         "build": "webpack --mode=development",
-        "build:prod": "webpack --mode=production",
+        "build:prod": "NODE_ENV=production webpack --mode=production",
         "format": "prettier --write \"./**/*.{json,js}\"",
         "format:check": "prettier --list-different \"./**/*.{json,js}\"",
         "lint": "eslint . && sass-lint -v -q",
-        "start": "yarn install && webpack-dev-server -d",
+        "start": "yarn install && webpack-dev-server --mode=development",
         "start:prod": "yarn install && yarn run build:prod && static site -a 0.0.0.0",
         "test": "jest",
         "test:ci": "wait-for-localhost 8080 && yarn run test"
@@ -46,10 +46,12 @@
         "webpack": "4.16.5"
     },
     "devDependencies": {
+        "clean-webpack-plugin": "0.1.19",
         "eslint": "4.5.0",
         "eslint-config-prettier": "2.9.0",
         "jest": "23.4.2",
         "jest-puppeteer": "3.2.1",
+        "mini-css-extract-plugin": "0.4.1",
         "node-static": "0.7.10",
         "prettier": "1.14.1",
         "puppeteer": "1.6.2",

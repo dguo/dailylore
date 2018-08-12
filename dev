@@ -67,6 +67,10 @@ parser_start.set_defaults(func=start)
 def test(args, remaining):
     return run(['yarn', 'run', 'test'] + (remaining or [])).returncode
 
+@command('Run a Yarn command')
+def yarn(args, remaining):
+    return run(['yarn'] + remaining or []).returncode
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         args, remaining = parser.parse_known_args()
