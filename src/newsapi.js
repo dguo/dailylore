@@ -1,7 +1,4 @@
 import axios from 'axios';
-import shuffle from 'lodash.shuffle';
-
-const API_KEY = '198d808f4c7f469bafc18a653d8ee81e';
 
 const BASE_URL = 'https://newsapi.org/v2/top-headlines';
 
@@ -54,9 +51,9 @@ const SOURCES = [
     'usa-today'
 ];
 
-function requestHeadlines(page) {
+function requestHeadlines(page, apiKey) {
     const options = {
-        headers: {'X-Api-Key': API_KEY}
+        headers: {'X-Api-Key': apiKey}
     };
 
     return axios.get(
@@ -80,7 +77,9 @@ function storeArticles(store, articles) {
         };
 
         if (store.hasOwnProperty(source.id)) {
-            store[source.id].articles.push(trimmedArticle);
+            if (store[source.id].articles.length < 3) {
+                store[source.id].articles.push(trimmedArticle);
+            }
         } else {
             store[source.id] = {
                 name: source.name,
@@ -90,10 +89,10 @@ function storeArticles(store, articles) {
     }
 }
 
-export function getSourcesWithArticles() {
+export function getSourcesWithArticles(apiKey) {
     const sources = {};
 
-    return requestHeadlines(1)
+    return requestHeadlines(1, apiKey)
         .then(response => {
             const data = response.data;
 
@@ -108,7 +107,7 @@ export function getSourcesWithArticles() {
 
             const getRemainingPages = [];
             for (let page = 2; page <= numPages; page++) {
-                getRemainingPages.push(requestHeadlines(page));
+                getRemainingPages.push(requestHeadlines(page, apiKey));
             }
 
             return axios.all(getRemainingPages);
@@ -122,6 +121,6 @@ export function getSourcesWithArticles() {
                 }
             }
 
-            return shuffle(Object.values(sources));
+            return Object.values(sources);
         });
 }

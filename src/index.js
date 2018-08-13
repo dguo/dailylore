@@ -1,9 +1,10 @@
+import axios from 'axios';
 import 'autotrack/lib/plugins/outbound-link-tracker';
 import debug from 'debug';
+import shuffle from 'lodash.shuffle';
 import storageAvailable from 'storage-available';
 
 import './styles.scss';
-import {getSourcesWithArticles} from './newsapi';
 
 const log = debug('lore');
 
@@ -149,8 +150,11 @@ if (!hideViewed) {
 
 document.getElementById('loading-bar').style.visibility = 'visible';
 
-getSourcesWithArticles()
-    .then(sources => {
+axios
+    .get(`/headlines.json`)
+    .then(response => {
+        const headlines = shuffle(response.data);
+
         let viewed = {};
         if (hideViewed) {
             try {
@@ -161,7 +165,7 @@ getSourcesWithArticles()
         const main = document.getElementById('main');
         const endMessage = document.getElementById('end-message');
 
-        for (let source of sources) {
+        for (let source of headlines) {
             const card = getSourceCard(
                 source.name,
                 source.url,

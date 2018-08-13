@@ -67,7 +67,11 @@ parser_start.set_defaults(func=start)
 def test(args, remaining):
     return run(['yarn', 'run', 'test'] + (remaining or [])).returncode
 
-@command('Run a Yarn command')
+@command('update the headlines file')
+def update(args, remaining):
+    return run(['yarn', 'run', 'get-headlines']).returncode
+
+@command('run a Yarn command')
 def yarn(args, remaining):
     return run(['yarn'] + remaining or []).returncode
 

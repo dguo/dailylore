@@ -45,3 +45,6 @@ jspm_packages
 .DS_Store
 
 site/assets/
+site/headlines.json
+
+.env
