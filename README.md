@@ -1,6 +1,7 @@
-# [The Daily Lore](https://www.dailylore.com/) [![Build Status](https://travis-ci.org/dguo/dailylore.svg?branch=master)](https://travis-ci.org/dguo/dailylore)
+# The Daily Lore [![Build Status](https://travis-ci.org/dguo/dailylore.svg?branch=master)](https://travis-ci.org/dguo/dailylore)
 
-Lightweight, static news aggregation website
+[The Daily Lore](https://www.dailylore.com/) is a lightweight, static news
+aggregation website.
 
 ## Tools and Infrastructure
 
@@ -9,9 +10,10 @@ Lightweight, static news aggregation website
     * [Custom build](https://github.com/dguo/dailylore/blob/master/styles.scss)
       to avoid including unused components
 * [Travis CI](https://travis-ci.org/) for continuous integration
-* [Netlify](https://www.netlify.com/) for hosting
+* [Netlify](https://www.netlify.com/) for hosting and continuous deployment
 * [Google Analytics](https://www.google.com/analytics/) for tracking pageviews
 * [StatusCake](https://www.statuscake.com/) for monitoring
+* [Zapier](https://zapier.com/) for [triggering hourly rebuilds](https://zapier.com/apps/schedule/integrations/webhook/2845/send-a-webhook-post-request-on-a-daily-schedule) to update the headlines
 
 ## Development
 
