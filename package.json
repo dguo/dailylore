@@ -4,12 +4,13 @@
     "description": "Lightweight news headlines aggregator",
     "private": true,
     "scripts": {
-        "build": "webpack --mode=development",
-        "build:prod": "NODE_ENV=production webpack --mode=production",
+        "build": "yarn run get-headlines && webpack --mode=development",
+        "build:prod": "yarn run get-headlines && NODE_ENV=production webpack --mode=production",
         "format": "prettier --write \"./**/*.{json,js}\"",
         "format:check": "prettier --list-different \"./**/*.{json,js}\"",
+        "get-headlines": "babel-node ./src/get-headlines",
         "lint": "eslint . && sass-lint -v -q",
-        "start": "yarn install && webpack-dev-server --mode=development",
+        "start": "yarn install && yarn run get-headlines && webpack-dev-server --mode=development",
         "start:prod": "yarn install && yarn run build:prod && static site -a 0.0.0.0",
         "test": "jest",
         "test:ci": "wait-for-localhost 8080 && yarn run test"
@@ -46,7 +47,9 @@
         "webpack": "4.16.5"
     },
     "devDependencies": {
+        "babel-cli": "6.26.0",
         "clean-webpack-plugin": "0.1.19",
+        "dotenv": "6.0.0",
         "eslint": "4.5.0",
         "eslint-config-prettier": "2.9.0",
         "jest": "23.4.2",
@@ -59,6 +62,11 @@
         "wait-for-localhost-cli": "1.0.0",
         "webpack-cli": "3.1.0",
         "webpack-dev-server": "3.1.5"
+    },
+    "babel": {
+        "presets": [
+            "env"
+        ]
     },
     "eslintConfig": {
         "extends": [
