@@ -20,6 +20,7 @@ const MOCK_HEADLINES_FILE = path.resolve(
 if (!NEWS_API_KEY) {
     if (MOCK_HEADLINES === '1') {
         fs.copyFileSync(MOCK_HEADLINES_FILE, HEADLINES_FILE);
+        console.log('Using mock headlines');
     } else {
         console.error('The NEWS_API_KEY environment variable is not set.');
         console.error('Use template.env to Create a .env file.');
@@ -29,5 +30,6 @@ if (!NEWS_API_KEY) {
 } else {
     getSourcesWithArticles(NEWS_API_KEY).then(headlines => {
         fs.writeFileSync(HEADLINES_FILE, JSON.stringify(headlines));
+        console.log('Retrieved real headlines');
     });
 }
