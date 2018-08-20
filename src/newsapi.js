@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://newsapi.org/v2/top-headlines';
+const BASE_URL = 'https://newsapi.org/v2';
 
 // 100 is the maximum allowed
 const PAGE_SIZE = 100;
@@ -57,11 +57,19 @@ function requestHeadlines(page, apiKey) {
     };
 
     return axios.get(
-        `${BASE_URL}?page=${page}&pageSize=${PAGE_SIZE}&sources=${SOURCES.join(
+        `${BASE_URL}/top-headlines?page=${page}&pageSize=${PAGE_SIZE}&sources=${SOURCES.join(
             ','
         )}`,
         options
     );
+}
+
+function requestSources(apiKey) {
+    const options = {
+        headers: {'X-Api-Key': apiKey}
+    };
+
+    return axios.get(`${BASE_URL}/sources`, options);
 }
 
 function storeArticles(store, articles) {
@@ -91,8 +99,22 @@ function storeArticles(store, articles) {
 
 export function getSourcesWithArticles(apiKey) {
     const sources = {};
+    const sourceUrls = {};
 
-    return requestHeadlines(1, apiKey)
+    return requestSources(apiKey)
+        .then(response => {
+            const data = response.data;
+
+            if (data.status !== 'ok') {
+                throw new Error(data.message);
+            }
+
+            for (let {id, url} of data.sources) {
+                sourceUrls[id] = url;
+            }
+
+            return requestHeadlines(1, apiKey);
+        })
         .then(response => {
             const data = response.data;
 
@@ -121,6 +143,9 @@ export function getSourcesWithArticles(apiKey) {
                 }
             }
 
-            return Object.values(sources);
+            return Object.entries(sources).map(([id, source]) => {
+                source.url = sourceUrls[id];
+                return source;
+            });
         });
 }
