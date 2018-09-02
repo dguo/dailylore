@@ -13,7 +13,7 @@ aggregation website.
 * [Netlify](https://www.netlify.com/) for hosting and continuous deployment
 * [Google Analytics](https://www.google.com/analytics/) for tracking pageviews
 * [StatusCake](https://www.statuscake.com/) for monitoring
-* [Zapier](https://zapier.com/) for [triggering hourly rebuilds](https://zapier.com/apps/schedule/integrations/webhook/2845/send-a-webhook-post-request-on-a-daily-schedule) to update the headlines
+* [IFTTT](https://ifttt.com/) for [triggering hourly rebuilds](https://ifttt.com/date_and_time) to update the headlines through a [Netlify webhook](https://www.netlify.com/docs/webhooks/)
 
 ## Development
 
