@@ -28,8 +28,13 @@ if (!NEWS_API_KEY) {
         process.exit(1);
     }
 } else {
-    getSourcesWithArticles(NEWS_API_KEY).then(headlines => {
-        fs.writeFileSync(HEADLINES_FILE, JSON.stringify(headlines));
-        console.log('Retrieved real headlines');
-    });
+    getSourcesWithArticles(NEWS_API_KEY)
+        .then(headlines => {
+            fs.writeFileSync(HEADLINES_FILE, JSON.stringify(headlines));
+            console.log('Retrieved real headlines');
+        })
+        .catch(error => {
+            console.error(error);
+            throw error;
+        });
 }

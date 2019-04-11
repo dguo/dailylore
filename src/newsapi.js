@@ -122,15 +122,15 @@ export function getSourcesWithArticles(apiKey) {
                 throw new Error(data.message);
             }
 
-            const totalResults = data.totalResults;
-            const numPages = Math.ceil(totalResults / PAGE_SIZE);
+            // const totalResults = data.totalResults;
+            // const numPages = Math.ceil(totalResults / PAGE_SIZE);
 
             storeArticles(sources, data.articles);
 
             const getRemainingPages = [];
-            for (let page = 2; page <= numPages; page++) {
-                getRemainingPages.push(requestHeadlines(page, apiKey));
-            }
+            // for (let page = 2; page <= numPages; page++) {
+            // getRemainingPages.push(requestHeadlines(page, apiKey));
+            // }
 
             return axios.all(getRemainingPages);
         })
