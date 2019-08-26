@@ -35,6 +35,6 @@ if (!NEWS_API_KEY) {
         })
         .catch(error => {
             console.error(error);
-            throw error;
+            process.exit(1);
         });
 }
