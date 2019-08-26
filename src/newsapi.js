@@ -5,7 +5,7 @@ const BASE_URL = 'https://newsapi.org/v2';
 // 100 is the maximum allowed
 const PAGE_SIZE = 100;
 
-const SOURCES = [
+let SOURCES = [
     'abc-news',
     'ars-technica',
     'associated-press',
@@ -39,7 +39,6 @@ const SOURCES = [
     'reuters',
     'techcrunch',
     'techradar',
-    'the-economist',
     'the-huffington-post',
     'the-new-york-times',
     'the-next-web',
@@ -112,6 +111,14 @@ export function getSourcesWithArticles(apiKey) {
             for (let {id, url} of data.sources) {
                 sourceUrls[id] = url;
             }
+
+            /* Providing an invalid source to the top-headlines endpoint will
+               result in a 400 error. */
+            SOURCES = SOURCES.filter(source =>
+                Boolean(
+                    data.sources.find(validSource => validSource.id === source)
+                )
+            );
 
             return requestHeadlines(1, apiKey);
         })
