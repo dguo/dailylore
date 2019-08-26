@@ -53,7 +53,7 @@ function getSourceCard(name, homepageUrl, articles, viewed) {
     for (let i = 0; i < 3 && i < articles.length; i++) {
         if (
             addedTitles.indexOf(articles[i].title) !== -1 ||
-            viewed.hasOwnProperty(articles[i].url)
+            Object.prototype.hasOwnProperty.call(viewed, articles[i].url)
         ) {
             continue;
         }

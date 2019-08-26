@@ -83,7 +83,7 @@ function storeArticles(store, articles) {
             url: article.url
         };
 
-        if (store.hasOwnProperty(source.id)) {
+        if (Object.prototype.hasOwnProperty.call(store, source.id)) {
             if (store[source.id].articles.length < 3) {
                 store[source.id].articles.push(trimmedArticle);
             }
