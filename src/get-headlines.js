@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 
 import dotenv from 'dotenv';
+import pRetry from 'p-retry';
+
 import {getSourcesWithArticles} from './newsapi';
 
 dotenv.config();
@@ -28,7 +30,11 @@ if (!NEWS_API_KEY) {
         process.exit(1);
     }
 } else {
-    getSourcesWithArticles(NEWS_API_KEY)
+    pRetry(() => getSourcesWithArticles(NEWS_API_KEY), {
+        retries: 4,
+        minTimeout: 2000,
+        maxTimeout: 8000
+    })
         .then(headlines => {
             fs.writeFileSync(HEADLINES_FILE, JSON.stringify(headlines));
             console.log('Retrieved real headlines');
