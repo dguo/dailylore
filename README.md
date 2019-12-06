@@ -1,6 +1,7 @@
 # The Daily Lore
 
-[![Build Status](https://travis-ci.org/dguo/dailylore.svg?branch=master)](https://travis-ci.org/dguo/dailylore) [![Netlify Status](https://api.netlify.com/api/v1/badges/f2e1efb6-58fe-48f0-8493-1f9de6430362/deploy-status)](https://app.netlify.com/sites/the-daily-lore/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f2e1efb6-58fe-48f0-8493-1f9de6430362/deploy-status)](https://app.netlify.com/sites/the-daily-lore/deploys)
+[![CI status](https://github.com/dguo/dailylore/workflows/CI/badge.svg)](https://github.com/dguo/dailylore/actions?query=branch%3Amaster)
 
 [The Daily Lore](https://www.dailylore.com/) is a lightweight, static news
 aggregation website.
