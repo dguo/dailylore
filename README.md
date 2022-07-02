@@ -1,7 +1,7 @@
 # The Daily Lore
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f2e1efb6-58fe-48f0-8493-1f9de6430362/deploy-status)](https://app.netlify.com/sites/the-daily-lore/deploys)
-[![CI status](https://github.com/dguo/dailylore/workflows/CI/badge.svg)](https://github.com/dguo/dailylore/actions?query=branch%3Amaster)
+[![CI status](https://github.com/dguo/dailylore/workflows/CI/badge.svg)](https://github.com/dguo/dailylore/actions?query=branch%3Amain)
 
 [The Daily Lore](https://www.dailylore.com/) is a lightweight, static news
 aggregation website.
@@ -10,7 +10,7 @@ aggregation website.
 
 * [News API](https://newsapi.org) for the headlines
 * [Materialize](http://materializecss.com) for styling
-    * [Custom build](https://github.com/dguo/dailylore/blob/master/styles.scss)
+    * [Custom build](https://github.com/dguo/dailylore/blob/main/styles.scss)
       to avoid including unused components
 * [Travis CI](https://travis-ci.org/) for continuous integration
 * [Netlify](https://www.netlify.com/) for hosting and continuous deployment
@@ -49,4 +49,4 @@ repo](https://github.com/dguo/headlines).
 
 ## License
 
-[MIT](https://github.com/dguo/dailylore/blob/master/LICENSE)
+[MIT](https://github.com/dguo/dailylore/blob/main/LICENSE)
