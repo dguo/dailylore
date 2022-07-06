@@ -12,11 +12,10 @@ aggregation website.
 * [Materialize](http://materializecss.com) for styling
     * [Custom build](https://github.com/dguo/dailylore/blob/main/styles.scss)
       to avoid including unused components
-* [Travis CI](https://travis-ci.org/) for continuous integration
 * [Netlify](https://www.netlify.com/) for hosting and continuous deployment
 * [Google Analytics](https://www.google.com/analytics/) for tracking pageviews
 * [StatusCake](https://www.statuscake.com/) for monitoring
-* [IFTTT](https://ifttt.com/) for [triggering hourly rebuilds](https://ifttt.com/date_and_time) to update the headlines through a [Netlify webhook](https://www.netlify.com/docs/webhooks/)
+* [Zapier](https://zapier.com) for triggering daily deploys to update the headlines through a [Netlify webhook](https://www.netlify.com/docs/webhooks/)
 
 ## Development
 
