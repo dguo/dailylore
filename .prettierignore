@@ -1,3 +1,4 @@
 site/assets/
 site/legacy/
 site/*.json
+*.yml
