@@ -30,15 +30,9 @@ should refresh by itself.
 To view [debug](https://github.com/visionmedia/debug#browser-support) output,
 set `localStorage.debug = 'lore';` in the browser console, and reload the page.
 
-The tests use [Puppeteer](https://github.com/GoogleChrome/puppeteer), which
-controls a headless instance of Chrome. If you need to debug the tests, you can
-turn headless mode off with `$ HEADLESS=0 dev test` so that you can actually
-see the browser. You can also add an `await jestPuppeteer.debug();` statement
-to the test to [suspend
-execution](https://github.com/smooth-code/jest-puppeteer#put-in-debug-mode).
-Lastly, you can add the `slowMo`
-[option](https://github.com/GoogleChrome/puppeteer#debugging-tips) to
-`jest-puppeteer.config.js` to slow everything down.
+The tests use [Playwright](https://playwright.dev/), which controls a headless
+instance of Chrome. If you need to debug the tests, check out these [debugging
+tips](https://playwright.dev/docs/debug).
 
 ## Legacy
 

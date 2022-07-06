@@ -13,7 +13,7 @@ from urllib.error import URLError
 from urllib.request import urlopen
 import webbrowser
 
-LOCAL_URL = 'http://localhost:8080'
+LOCAL_URL = 'http://localhost:3000'
 
 def open_in_browser():
     while True:
