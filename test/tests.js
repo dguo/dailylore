@@ -60,8 +60,8 @@ describe('The Daily Lore', () => {
 
         await page.waitForSelector('.viewed', {visible: true});
 
-        const viewedLinks = await page.$$eval('.viewed', links => {
-            return links.map(link => link.href);
+        const viewedLinks = await page.$$eval('.viewed', (links) => {
+            return links.map((link) => link.href);
         });
 
         expect(viewedLinks.length).toBeGreaterThan(2);
@@ -73,8 +73,8 @@ describe('The Daily Lore', () => {
 
         await page.waitForSelector('.viewed', {visible: true});
 
-        const allLinks = await page.$$eval('a.article', links => {
-            return links.map(link => link.href);
+        const allLinks = await page.$$eval('a.article', (links) => {
+            return links.map((link) => link.href);
         });
 
         for (let link of viewedLinks) {
