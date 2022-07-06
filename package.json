@@ -54,6 +54,9 @@
         "sass-lint": "1.13.1",
         "wait-for-localhost-cli": "3.0.0"
     },
+    "browserslist": [
+        "defaults"
+    ],
     "eslintConfig": {
         "extends": [
             "eslint:recommended",
