@@ -4,13 +4,12 @@
     "description": "Lightweight news headlines aggregator",
     "private": true,
     "scripts": {
-        "build": "yarn run get-headlines && webpack --mode=development",
-        "build:prod": "yarn run get-headlines && NODE_ENV=production webpack --mode=production",
+        "build:prod": "yarn run get-headlines && parcel build site/index.html",
         "format": "prettier --write \"./**/*.{json,js}\"",
         "format:check": "prettier --list-different \"./**/*.{json,js}\"",
-        "get-headlines": "babel-node ./src/get-headlines",
+        "get-headlines": "node ./src/get-headlines",
         "lint": "eslint . && sass-lint -v -q",
-        "start": "yarn install && yarn run get-headlines && webpack-dev-server --mode=development",
+        "start": "yarn install && yarn run get-headlines && parcel site/index.html",
         "start:prod": "yarn install && yarn run build:prod && static site -a 0.0.0.0",
         "test": "jest",
         "test:ci": "wait-for-localhost 8080 && yarn run test"
@@ -19,6 +18,7 @@
         "type": "git",
         "url": "git+https://github.com/dguo/dailylore.git"
     },
+    "type": "module",
     "keywords": [
         "news",
         "headlines",
@@ -31,50 +31,30 @@
     },
     "homepage": "https://dailylore.com",
     "dependencies": {
-        "@babel/core": "7.5.5",
-        "@babel/preset-env": "7.5.5",
         "autotrack": "1.1.0",
-        "axios": "0.19.0",
-        "babel-loader": "8.0.6",
-        "css-loader": "3.2.0",
         "debug": "4.1.1",
         "lodash.shuffle": "4.2.0",
         "materialize-css": "0.100.1",
-        "node-sass": "7.0.1",
         "p-retry": "4.1.0",
-        "sass-loader": "7.3.1",
-        "storage-available": "1.1.0",
-        "style-loader": "1.0.0",
-        "webpack": "4.39.2"
+        "storage-available": "1.1.0"
     },
     "devDependencies": {
-        "@babel/node": "7.5.5",
-        "clean-webpack-plugin": "0.1.19",
+        "@parcel/packager-raw-url": "2.6.2",
+        "@parcel/transformer-sass": "2.6.2",
+        "@parcel/transformer-webmanifest": "2.6.2",
+        "axios": "0.27.2",
         "dotenv": "8.1.0",
-        "eslint": "6.2.2",
-        "eslint-config-prettier": "6.1.0",
+        "eslint": "8.19.0",
+        "eslint-config-prettier": "8.5.0",
         "jest": "24.9.0",
         "jest-puppeteer": "4.3.0",
-        "mini-css-extract-plugin": "0.8.0",
         "node-static": "0.7.11",
+        "parcel": "2.6.2",
         "prettier": "1.18.2",
+        "process": "0.11.10",
         "puppeteer": "1.19.0",
         "sass-lint": "1.13.1",
-        "wait-for-localhost-cli": "1.1.0",
-        "webpack-cli": "3.3.7",
-        "webpack-dev-server": "3.8.0"
-    },
-    "babel": {
-        "presets": [
-            [
-                "@babel/preset-env",
-                {
-                    "targets": {
-                        "node": "current"
-                    }
-                }
-            ]
-        ]
+        "wait-for-localhost-cli": "1.1.0"
     },
     "eslintConfig": {
         "extends": [
@@ -82,7 +62,7 @@
             "prettier"
         ],
         "parserOptions": {
-            "ecmaVersion": 8,
+            "ecmaVersion": 2020,
             "sourceType": "module"
         },
         "env": {

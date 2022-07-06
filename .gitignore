@@ -48,3 +48,6 @@ site/assets/
 site/headlines.json
 
 .env
+
+.parcel-cache
+dist/

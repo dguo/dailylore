@@ -25,8 +25,7 @@ script. Run `$ ./dev` to see the options. To get started, run `$ yarn start` or
 `$ ./dev start`.
 
 If you make any changes to the source, the bundle will be rebuilt, and the page
-should refresh by itself (thanks to
-[webpack-dev-server](https://webpack.github.io/docs/webpack-dev-server.html)).
+should refresh by itself.
 
 To view [debug](https://github.com/visionmedia/debug#browser-support) output,
 set `localStorage.debug = 'lore';` in the browser console, and reload the page.
