@@ -3,16 +3,19 @@
 
 import fs from 'fs';
 import path from 'path';
+import {fileURLToPath} from 'url';
 
 import dotenv from 'dotenv';
 import pRetry from 'p-retry';
 
-import {getSourcesWithArticles} from './newsapi';
+import {getSourcesWithArticles} from './newsapi.js';
 
 dotenv.config();
 
 const {MOCK_HEADLINES, NEWS_API_KEY} = process.env;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const HEADLINES_FILE = path.resolve(__dirname, '../site/headlines.json');
 const MOCK_HEADLINES_FILE = path.resolve(
     __dirname,

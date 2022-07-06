@@ -1,6 +1,6 @@
 [build]
   command = "yarn run build:prod"
-  publish = "site"
+  publish = "dist"
 
 [build.environment]
   YARN_VERSION = "1.9.2"

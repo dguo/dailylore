@@ -1,10 +1,8 @@
-import axios from 'axios';
 import 'autotrack/lib/plugins/outbound-link-tracker';
 import debug from 'debug';
 import shuffle from 'lodash.shuffle';
 import storageAvailable from 'storage-available';
-
-import './styles.scss';
+import * as rawHeadlines from '../site/headlines.json';
 
 const log = debug('lore');
 
@@ -150,53 +148,46 @@ if (!hideViewed) {
 
 document.getElementById('loading-bar').style.visibility = 'visible';
 
-axios
-    .get(`/headlines.json`)
-    .then(response => {
-        const headlines = shuffle(response.data);
+const headlines = shuffle(rawHeadlines);
 
-        let viewed = {};
-        if (hideViewed) {
-            try {
-                viewed = JSON.parse(localStorage.getItem('viewed')) || viewed;
-            } catch (e) {} // eslint-disable-line no-empty
-        }
+let viewed = {};
+if (hideViewed) {
+    try {
+        viewed = JSON.parse(localStorage.getItem('viewed')) || viewed;
+    } catch (e) {} // eslint-disable-line no-empty
+}
 
-        const main = document.getElementById('main');
-        const endMessage = document.getElementById('end-message');
+const main = document.getElementById('main');
+const endMessage = document.getElementById('end-message');
 
-        for (let source of headlines) {
-            const card = getSourceCard(
-                source.name,
-                source.url,
-                source.articles,
-                viewed
-            );
+for (let source of headlines) {
+    const card = getSourceCard(
+        source.name,
+        source.url,
+        source.articles,
+        viewed
+    );
 
-            if (card) {
-                const row = document.createElement('div');
-                row.innerHTML = `<div class="row">${card}</div>`;
-                main.insertBefore(row, endMessage);
-            }
-        }
+    if (card) {
+        const row = document.createElement('div');
+        row.innerHTML = `<div class="row">${card}</div>`;
+        main.insertBefore(row, endMessage);
+    }
+}
 
-        // Hide the loading bar without causing the rows to move up
-        // slightly
-        document.getElementById('loading-bar').style.visibility = 'hidden';
+// Hide the loading bar without causing the rows to move up
+// slightly
+document.getElementById('loading-bar').style.visibility = 'hidden';
 
-        // Unhide the end message and footer
-        endMessage.classList.remove('hide');
-        document.getElementById('footer').classList.remove('hide');
+// Unhide the end message and footer
+endMessage.classList.remove('hide');
+document.getElementById('footer').classList.remove('hide');
 
-        if (hideViewed) {
-            checkVisibility();
-        }
+if (hideViewed) {
+    checkVisibility();
+}
 
-        pruneViewedLinks();
-    })
-    .catch(error => {
-        log(error.message);
-    });
+pruneViewedLinks();
 
 document.getElementById('view-once').addEventListener('change', function() {
     if (storageAvailable('localStorage')) {
