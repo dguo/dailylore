@@ -80,7 +80,7 @@ if (
     location.search
         .slice(1)
         .split('&')
-        .forEach(pair => {
+        .forEach((pair) => {
             const [key, value] = pair.split('=');
             if (key === 'view-once' && value === 'off') {
                 hideViewed = false;
@@ -92,7 +92,7 @@ if (!hideViewed) {
     document.getElementById('view-once').checked = false;
 } else {
     let throttle = false;
-    var checkVisibility = function() {
+    var checkVisibility = function () {
         if (throttle) {
             return;
         }
@@ -138,7 +138,7 @@ if (!hideViewed) {
         }
 
         throttle = true;
-        setTimeout(function() {
+        setTimeout(function () {
             throttle = false;
         }, 200);
     };
@@ -189,7 +189,7 @@ if (hideViewed) {
 
 pruneViewedLinks();
 
-document.getElementById('view-once').addEventListener('change', function() {
+document.getElementById('view-once').addEventListener('change', function () {
     if (storageAvailable('localStorage')) {
         try {
             localStorage.setItem('viewOnce', this.checked ? 'on' : 'off');

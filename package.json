@@ -31,11 +31,11 @@
     },
     "homepage": "https://dailylore.com",
     "dependencies": {
-        "autotrack": "1.1.0",
-        "debug": "4.1.1",
+        "autotrack": "2.4.1",
+        "debug": "4.3.4",
         "lodash.shuffle": "4.2.0",
         "materialize-css": "0.100.1",
-        "p-retry": "4.1.0",
+        "p-retry": "5.1.1",
         "storage-available": "1.1.0"
     },
     "devDependencies": {
@@ -43,18 +43,18 @@
         "@parcel/transformer-sass": "2.6.2",
         "@parcel/transformer-webmanifest": "2.6.2",
         "axios": "0.27.2",
-        "dotenv": "8.1.0",
+        "dotenv": "16.0.1",
         "eslint": "8.19.0",
         "eslint-config-prettier": "8.5.0",
         "jest": "24.9.0",
         "jest-puppeteer": "4.3.0",
         "node-static": "0.7.11",
         "parcel": "2.6.2",
-        "prettier": "1.18.2",
+        "prettier": "2.7.1",
         "process": "0.11.10",
         "puppeteer": "1.19.0",
         "sass-lint": "1.13.1",
-        "wait-for-localhost-cli": "1.1.0"
+        "wait-for-localhost-cli": "3.0.0"
     },
     "eslintConfig": {
         "extends": [
@@ -85,6 +85,7 @@
     "prettier": {
         "bracketSpacing": false,
         "singleQuote": true,
-        "tabWidth": 4
+        "tabWidth": 4,
+        "trailingComma": "none"
     }
 }

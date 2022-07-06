@@ -38,11 +38,11 @@ if (!NEWS_API_KEY) {
         minTimeout: 2000,
         maxTimeout: 8000
     })
-        .then(headlines => {
+        .then((headlines) => {
             fs.writeFileSync(HEADLINES_FILE, JSON.stringify(headlines));
             console.log('Retrieved real headlines');
         })
-        .catch(error => {
+        .catch((error) => {
             console.error(error);
             process.exit(1);
         });

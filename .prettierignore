@@ -3,3 +3,4 @@ site/legacy/
 site/*.json
 *.md
 *.yml
+dist/

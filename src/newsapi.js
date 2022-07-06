@@ -101,7 +101,7 @@ export function getSourcesWithArticles(apiKey) {
     const sourceUrls = {};
 
     return requestSources(apiKey)
-        .then(response => {
+        .then((response) => {
             const data = response.data;
 
             if (data.status !== 'ok') {
@@ -114,15 +114,17 @@ export function getSourcesWithArticles(apiKey) {
 
             /* Providing an invalid source to the top-headlines endpoint will
                result in a 400 error. */
-            SOURCES = SOURCES.filter(source =>
+            SOURCES = SOURCES.filter((source) =>
                 Boolean(
-                    data.sources.find(validSource => validSource.id === source)
+                    data.sources.find(
+                        (validSource) => validSource.id === source
+                    )
                 )
             );
 
             return requestHeadlines(1, apiKey);
         })
-        .then(response => {
+        .then((response) => {
             const data = response.data;
 
             if (data.status !== 'ok') {
@@ -141,7 +143,7 @@ export function getSourcesWithArticles(apiKey) {
 
             return axios.all(getRemainingPages);
         })
-        .then(responses => {
+        .then((responses) => {
             for (let response of responses) {
                 const data = response.data;
 
