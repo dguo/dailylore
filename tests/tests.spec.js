@@ -1,21 +1,16 @@
-/* eslint-env node, jest */
-/* global page */
+import {test, expect} from '@playwright/test';
 
-describe('The Daily Lore', () => {
-    beforeAll(() => {
-        page.setDefaultNavigationTimeout(5000);
+test.describe('The Daily Lore', () => {
+    test.beforeEach(async ({page}) => {
+        await page.goto('http://localhost:3000/?view-once=off');
     });
 
-    beforeEach(async () => {
-        await page.goto('http://localhost:8080/?view-once=off');
-    });
-
-    it('should have a title', async () => {
+    test('should have a title', async ({page}) => {
         const title = await page.title();
         expect(title).toBe('The Daily Lore');
     });
 
-    it('should have a GitHub corner', async () => {
+    test('should have a GitHub corner', async ({page}) => {
         const navigation = page.waitForNavigation();
         await page.click('#github-corner');
         await navigation;
@@ -23,7 +18,7 @@ describe('The Daily Lore', () => {
         expect(title).toMatch('dguo/dailylore');
     });
 
-    it('should link back to News API', async () => {
+    test('should link back to News API', async ({page}) => {
         await page.waitForSelector('#footer', {visible: true});
         const navigation = page.waitForNavigation();
         await page.click('a[href*="newsapi"]');
@@ -32,19 +27,21 @@ describe('The Daily Lore', () => {
         expect(url).toMatch('https://newsapi.org');
     });
 
-    it('should have a GitHub link in the footer', async () => {
+    test('should have a GitHub link in the footer', async ({page}) => {
         await page.waitForSelector('#footer', {visible: true});
         const link = await page.$('#footer a[href*="github"]');
         expect(link).not.toBeNull();
     });
 
-    it('should have several sources', async () => {
+    test('should have several sources', async ({page}) => {
         await page.waitForSelector('a.article', {visible: true});
         const articles = await page.$$('a.article');
         expect(articles.length).toBeGreaterThan(30);
     });
 
-    it('should only show links once when view once is turned on', async () => {
+    test('should only show links once when view once is turned on', async ({
+        page
+    }) => {
         await page.waitForSelector('a.article', {visible: true});
 
         // Make sure the collection of viewed links is cleared
@@ -56,7 +53,7 @@ describe('The Daily Lore', () => {
         // Load the site with view once enabled, and collect the links that
         // have been marked as viewed
 
-        await page.goto('http://localhost:8080/');
+        await page.goto('http://localhost:3000/');
 
         await page.waitForSelector('.viewed', {visible: true});
 

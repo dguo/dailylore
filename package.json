@@ -9,10 +9,10 @@
         "format:check": "prettier --list-different \"./**/*.{json,js}\"",
         "get-headlines": "node ./src/get-headlines",
         "lint": "eslint . && sass-lint -v -q",
-        "start": "yarn install && yarn run get-headlines && parcel site/index.html",
-        "start:prod": "yarn install && yarn run build:prod && static site -a 0.0.0.0",
-        "test": "jest",
-        "test:ci": "wait-for-localhost 8080 && yarn run test"
+        "start": "yarn install && yarn run get-headlines && parcel --port 3000 site/index.html",
+        "start:prod": "yarn install && yarn run build:prod && static dist --port 3000",
+        "test": "playwright test",
+        "test:ci": "wait-for-localhost 3000 && yarn run test"
     },
     "repository": {
         "type": "git",
@@ -42,17 +42,15 @@
         "@parcel/packager-raw-url": "2.6.2",
         "@parcel/transformer-sass": "2.6.2",
         "@parcel/transformer-webmanifest": "2.6.2",
+        "@playwright/test": "1.23.1",
         "axios": "0.27.2",
         "dotenv": "16.0.1",
         "eslint": "8.19.0",
         "eslint-config-prettier": "8.5.0",
-        "jest": "24.9.0",
-        "jest-puppeteer": "4.3.0",
         "node-static": "0.7.11",
         "parcel": "2.6.2",
         "prettier": "2.7.1",
         "process": "0.11.10",
-        "puppeteer": "1.19.0",
         "sass-lint": "1.13.1",
         "wait-for-localhost-cli": "3.0.0"
     },
@@ -77,10 +75,6 @@
                 }
             ]
         }
-    },
-    "jest": {
-        "preset": "jest-puppeteer",
-        "testRegex": "./test/.*.js$"
     },
     "prettier": {
         "bracketSpacing": false,
