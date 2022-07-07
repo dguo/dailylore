@@ -2,5 +2,21 @@
   command = "yarn run build:prod"
   publish = "dist"
 
+# For Plausible proxying:
+# https://plausible.io/docs/proxy/guides/netlify#troubleshooting
+[build.processing.js]
+  bundle = false
+  minify = false
+
 [build.environment]
   YARN_VERSION = "3.2.1"
+
+# Plausible
+[[redirects]]
+  from = "/alphonso-mango/js/script.js"
+  to = "https://plausible.io/js/script.js"
+  status = 200
+[[redirects]]
+  from = "/alphonso-mango/api/event"
+  to = "https://plausible.io/api/event"
+  status = 200
