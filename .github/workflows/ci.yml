@@ -32,3 +32,4 @@ jobs:
           MOCK_HEADLINES: 1
       - name: Run tests
         run: yarn run test:ci
+        timeout-minutes: 3
