@@ -3,4 +3,4 @@
   publish = "dist"
 
 [build.environment]
-  YARN_VERSION = "1.22.17"
+  YARN_VERSION = "3.2.1"
