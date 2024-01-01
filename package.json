@@ -31,7 +31,6 @@
     },
     "homepage": "https://dailylore.com",
     "dependencies": {
-        "autotrack": "2.4.1",
         "debug": "4.3.4",
         "lodash.shuffle": "4.2.0",
         "materialize-css": "0.100.1",
