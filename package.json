@@ -41,7 +41,7 @@
         "@parcel/packager-raw-url": "2.6.2",
         "@parcel/transformer-sass": "2.6.2",
         "@parcel/transformer-webmanifest": "2.6.2",
-        "@playwright/test": "1.23.1",
+        "@playwright/test": "1.40.1",
         "axios": "0.27.2",
         "dotenv": "16.0.1",
         "eslint": "8.19.0",
