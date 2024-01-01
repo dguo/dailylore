@@ -1,10 +1,9 @@
 import {test, expect} from '@playwright/test';
-import dns from 'node:dns';
-dns.setDefaultResultOrder('ipv4first');
+import os from 'node:os';
 
 test.describe('The Daily Lore', () => {
     test.beforeEach(async ({page}) => {
-        await page.goto('http://127.0.0.1:3000/?view-once=off');
+        await page.goto(`${os.hostname()}:3000/?view-once=off`);
     });
 
     test('should have a title', async ({page}) => {
