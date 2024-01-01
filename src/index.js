@@ -1,4 +1,3 @@
-import 'autotrack/lib/plugins/outbound-link-tracker';
 import debug from 'debug';
 import shuffle from 'lodash.shuffle';
 import storageAvailable from 'storage-available';
