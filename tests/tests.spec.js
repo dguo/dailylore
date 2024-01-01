@@ -1,4 +1,6 @@
 import {test, expect} from '@playwright/test';
+import dns from 'node:dns';
+dns.setDefaultResultOrder('ipv4first');
 
 test.describe('The Daily Lore', () => {
     test.beforeEach(async ({page}) => {
