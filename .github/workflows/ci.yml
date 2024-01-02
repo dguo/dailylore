@@ -34,10 +34,10 @@ jobs:
         run: yarn run start:prod &
         env:
           MOCK_HEADLINES: 1
+      - name: Curl localhost
+        run: yarn wait-for-localhost 3000 && curl http://localhost:3000
       - name: Curl 127
         run: yarn wait-for-localhost 3000 && curl http://127.0.0.1:3000
-      - name: Curl localhost
-        run: curl http://localhost:3000
       - name: Run tests
         run: yarn run test:ci
         timeout-minutes: 3
