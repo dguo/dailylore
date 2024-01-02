@@ -10,7 +10,7 @@
         "get-headlines": "node ./src/get-headlines",
         "lint": "eslint . && sass-lint -v -q",
         "start": "yarn install && yarn run get-headlines && parcel --port 3000 site/index.html",
-        "start:prod": "yarn install && yarn run build:prod && static dist --port 3000",
+        "start:prod": "yarn install && yarn run build:prod && serve dist -p 3000",
         "test": "playwright test",
         "test:ci": "wait-for-localhost 3000 && yarn run test"
     },
@@ -52,6 +52,7 @@
         "prettier": "2.7.1",
         "process": "0.11.10",
         "sass-lint": "1.13.1",
+        "serve": "14.2.1",
         "wait-for-localhost-cli": "3.0.0"
     },
     "browserslist": [

@@ -35,7 +35,7 @@ jobs:
         env:
           MOCK_HEADLINES: 1
       - name: Serve the site
-        run: yarn static dist --port 3000 &
+        run: yarn serve dist -p 3000 &
       - name: Curl 127
         run: yarn wait-for-localhost 3000 && curl http://127.0.0.1:3000
       - name: Curl localhost
