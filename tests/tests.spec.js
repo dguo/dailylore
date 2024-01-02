@@ -2,7 +2,7 @@ import {test, expect} from '@playwright/test';
 
 test.describe('The Daily Lore', () => {
     test.beforeEach(async ({page}) => {
-        await page.goto('http://127.0.0.1:3000/?view-once=off');
+        await page.goto('http://localhost:3000/?view-once=off');
     });
 
     test('should have a title', async ({page}) => {
@@ -53,7 +53,7 @@ test.describe('The Daily Lore', () => {
         // Load the site with view once enabled, and collect the links that
         // have been marked as viewed
 
-        await page.goto('http://127.0.0.1:3000/');
+        await page.goto('http://localhost:3000/');
 
         await page.waitForSelector('.viewed', {visible: true});
 
