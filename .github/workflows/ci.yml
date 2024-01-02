@@ -30,10 +30,12 @@ jobs:
         run: yarn run format:check
       - name: Lint the code
         run: yarn run lint
-      - name: Start the server
-        run: yarn run start:prod &
+      - name: Build the site
+        run: yarn run build:prod
         env:
           MOCK_HEADLINES: 1
+      - name: Serve the site
+        run: yarn serve dist -p 3000 &
       - name: Run tests
         run: yarn run test:ci
         timeout-minutes: 3
