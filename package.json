@@ -6,7 +6,7 @@
     "scripts": {
         "build:prod": "yarn run get-headlines && parcel build site/index.html",
         "format": "prettier --write \"./**/*.{json,js}\"",
-        "format:check": "prettier --list-different \"./**/*.{json,js}\"",
+        "format:check": "prettier --check \"./**/*.{json,js}\"",
         "get-headlines": "node ./src/get-headlines",
         "lint": "eslint . && sass-lint -v -q",
         "start": "yarn install && yarn run get-headlines && parcel --port 3000 site/index.html",
@@ -34,7 +34,7 @@
         "debug": "4.3.4",
         "lodash.shuffle": "4.2.0",
         "materialize-css": "0.100.1",
-        "p-retry": "5.1.1",
+        "p-retry": "6.2.0",
         "storage-available": "1.1.0"
     },
     "devDependencies": {
@@ -42,17 +42,17 @@
         "@parcel/transformer-sass": "2.10.3",
         "@parcel/transformer-webmanifest": "2.10.3",
         "@playwright/test": "1.40.1",
-        "axios": "0.27.2",
-        "dotenv": "16.0.1",
-        "eslint": "8.19.0",
-        "eslint-config-prettier": "8.5.0",
+        "axios": "1.6.3",
+        "dotenv": "16.3.1",
+        "eslint": "8.56.0",
+        "eslint-config-prettier": "9.1.0",
         "parcel": "2.10.3",
         "parcel-resolver-ignore": "2.2.0",
-        "prettier": "2.7.1",
+        "prettier": "3.1.1",
         "process": "0.11.10",
         "sass-lint": "1.13.1",
         "serve": "14.2.1",
-        "wait-for-localhost-cli": "3.0.0"
+        "wait-for-localhost-cli": "3.1.0"
     },
     "browserslist": [
         "defaults"
