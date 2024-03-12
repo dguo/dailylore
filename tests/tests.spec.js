@@ -78,4 +78,10 @@ test.describe('The Daily Lore', () => {
             expect(allLinks).not.toContain(link);
         }
     });
+
+    test('should have the legacy site', async ({page}) => {
+        await page.goto('http://localhost:3000/legacy');
+        const title = await page.title();
+        expect(title).toBe('The Daily Lore');
+    });
 });
